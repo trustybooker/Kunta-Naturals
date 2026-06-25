@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-labelledby="title desc">
+  <title id="title">Kunta Naturals logo mark</title>
+  <desc id="desc">A premium circular Kunta Naturals mark with a rooted K shape and leaf.</desc>
+  <rect width="220" height="220" rx="52" fill="#2e2119"/>
+  <circle cx="110" cy="110" r="78" fill="none" stroke="#c9974a" stroke-width="10"/>
+  <path d="M84 57v107" fill="none" stroke="#fffaf2" stroke-width="16" stroke-linecap="round"/>
+  <path d="M137 70L89 111l54 52" fill="none" stroke="#fffaf2" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M129 76c31-33 60-25 68-20-4 28-31 49-67 34" fill="#536b45" stroke="#c9974a" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M91 165c-20 4-35 13-45 28M92 165c1 15-3 27-13 38M94 165c18 4 31 13 39 28" fill="none" stroke="#c9974a" stroke-width="7" stroke-linecap="round" opacity="0.9"/>
+</svg>
