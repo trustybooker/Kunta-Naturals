@@ -1,5 +1,6 @@
 const quiz = document.getElementById('ritualQuiz');
 const result = document.getElementById('quizResult');
+const productGrid = document.getElementById('productGrid');
 
 const recommendations = {
   'Glow Ritual': 'Your ritual type is the Glow Ritual. Start with the free guide, then use the 7-Day Body Ritual Guide. Suggested starter products: luffa, body oil, body butter.',
@@ -15,3 +16,68 @@ quiz?.addEventListener('submit', (event) => {
   result.style.display = 'block';
   result.textContent = selected ? recommendations[selected] : 'Choose one answer to reveal your ritual type.';
 });
+
+function publicImagePath(product) {
+  const src = product.image_url || 'assets/logo.svg';
+  return src.startsWith('assets/') ? src : src;
+}
+
+function productCard(product) {
+  const article = document.createElement('article');
+  article.className = 'public-product-card';
+
+  const img = document.createElement('img');
+  img.src = publicImagePath(product);
+  img.alt = product.name || 'Kunta Naturals product';
+  img.onerror = () => { img.src = 'assets/logo.svg'; };
+
+  const body = document.createElement('div');
+  const meta = document.createElement('p');
+  meta.className = 'product-meta';
+  meta.textContent = product.category || product.ritual_type || 'Kunta Naturals pick';
+
+  const title = document.createElement('h3');
+  title.textContent = product.name || 'Coming soon';
+
+  const desc = document.createElement('p');
+  desc.textContent = product.short_description || product.description || 'Product details coming soon.';
+
+  const action = document.createElement('a');
+  action.className = 'product-link';
+  const href = product.checkout_url || product.affiliate_url || '';
+  if (href && !href.includes('TODO_')) {
+    action.href = href;
+    action.target = '_blank';
+    action.rel = 'sponsored noopener';
+    action.textContent = product.price ? `View — $${Number(product.price).toFixed(2)}` : 'View product';
+  } else {
+    action.href = '#quiz';
+    action.textContent = 'Get ritual guide first';
+  }
+
+  body.append(meta, title, desc, action);
+  article.append(img, body);
+  return article;
+}
+
+async function loadPublicProducts() {
+  if (!productGrid) return;
+  try {
+    const response = await fetch('data/products.json', { cache: 'no-store' });
+    const products = await response.json();
+    const visible = products.filter((product) => product.status === 'active');
+    productGrid.replaceChildren();
+    if (!visible.length) {
+      const empty = document.createElement('article');
+      empty.className = 'public-product-card empty-card';
+      empty.innerHTML = '<div><p class="product-meta">Coming soon</p><h3>Starter product picks are being reviewed.</h3><p>Take the quiz first and get the guide while official product links and photos are added.</p><a class="product-link" href="#quiz">Take the quiz</a></div>';
+      productGrid.appendChild(empty);
+      return;
+    }
+    visible.forEach((product) => productGrid.appendChild(productCard(product)));
+  } catch {
+    productGrid.textContent = 'Product picks are being prepared.';
+  }
+}
+
+loadPublicProducts();
