@@ -205,10 +205,7 @@ section {
 
 .visual-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
-  grid-template-areas:
-    "large family"
-    "large studio";
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -220,9 +217,9 @@ section {
   box-shadow: 0 22px 70px rgba(46, 33, 25, 0.11);
 }
 
-.visual-card.large { grid-area: large; }
-.visual-card:nth-child(2) { grid-area: family; }
-.visual-card:nth-child(3) { grid-area: studio; }
+.visual-card.large {
+  grid-row: span 2;
+}
 
 .visual-card img {
   width: 100%;
@@ -385,10 +382,9 @@ footer {
   }
   .visual-grid {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "large"
-      "family"
-      "studio";
+  }
+  .visual-card.large {
+    grid-row: auto;
   }
 }
 
