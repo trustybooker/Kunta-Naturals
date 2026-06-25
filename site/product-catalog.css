@@ -16,15 +16,13 @@
   border-radius: 1rem;
   border: 1px solid var(--sand);
   overflow: hidden;
-  background:
-    radial-gradient(circle at 80% 12%, rgba(201,151,74,0.18), transparent 32%),
-    linear-gradient(135deg, var(--cream), var(--white));
+  background: linear-gradient(135deg, var(--cream), var(--white));
 }
 
 .product-media > img:first-child {
   width: 100%;
   aspect-ratio: 4 / 3;
-  object-fit: cover;
+  object-fit: contain;
   border: 0;
   border-radius: 0;
   background: transparent;
