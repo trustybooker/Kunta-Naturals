@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 220" role="img" aria-labelledby="title desc">
+  <title id="title">Kunta Naturals logo</title>
+  <desc id="desc">Kunta Naturals wordmark with rooted K leaf seal.</desc>
+  <rect width="760" height="220" rx="38" fill="#fffaf2"/>
+  <g transform="translate(34 34)">
+    <rect width="152" height="152" rx="36" fill="#2e2119"/>
+    <circle cx="76" cy="76" r="53" fill="none" stroke="#c9974a" stroke-width="7"/>
+    <path d="M57 40v73" fill="none" stroke="#fffaf2" stroke-width="11" stroke-linecap="round"/>
+    <path d="M93 49L61 77l37 35" fill="none" stroke="#fffaf2" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M90 52c22-23 43-17 48-14-3 20-21 35-47 24" fill="#536b45" stroke="#c9974a" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M62 113c-13 4-23 10-30 20M62 113c1 10-2 18-9 26M64 113c12 4 22 10 28 20" fill="none" stroke="#c9974a" stroke-width="5" stroke-linecap="round" opacity="0.9"/>
+  </g>
+  <text x="220" y="95" fill="#2e2119" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700" letter-spacing="-1">Kunta Naturals</text>
+  <text x="224" y="138" fill="#536b45" font-family="Arial, sans-serif" font-size="20" font-weight="800" letter-spacing="4">PURE · ROOTED · REAL</text>
+  <path d="M224 158h410" stroke="#e8d6bd" stroke-width="4" stroke-linecap="round"/>
+</svg>
