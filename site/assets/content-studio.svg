@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 680" role="img" aria-labelledby="title desc">
+  <title id="title">Kunta Naturals social content studio visual</title>
+  <desc id="desc">A premium illustration of a creator setup with phone, product cards, and Kunta Naturals social content prompts.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffaf2"/><stop offset="1" stop-color="#f7efe3"/></linearGradient><filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="20" stdDeviation="16" flood-color="#2e2119" flood-opacity="0.14"/></filter></defs>
+  <rect width="900" height="680" rx="48" fill="url(#bg)"/>
+  <circle cx="720" cy="126" r="100" fill="#536b45" opacity=".12"/>
+  <g filter="url(#soft)">
+    <rect x="120" y="160" width="270" height="380" rx="48" fill="#2e2119"/>
+    <rect x="145" y="206" width="220" height="286" rx="28" fill="#fffaf2"/>
+    <circle cx="255" cy="516" r="12" fill="#c9974a"/>
+    <rect x="170" y="240" width="168" height="84" rx="24" fill="#e8d6bd"/>
+    <rect x="170" y="350" width="120" height="14" rx="7" fill="#536b45" opacity=".85"/>
+    <rect x="170" y="380" width="154" height="10" rx="5" fill="#d8c2a7"/>
+    <rect x="170" y="404" width="128" height="10" rx="5" fill="#d8c2a7"/>
+  </g>
+  <g filter="url(#soft)">
+    <rect x="458" y="170" width="300" height="96" rx="26" fill="#fffaf2"/>
+    <text x="488" y="214" fill="#2e2119" font-family="Georgia,serif" font-size="28" font-weight="700">Today's hook</text>
+    <text x="488" y="244" fill="#536b45" font-family="Arial,sans-serif" font-size="15" font-weight="800">Stop buying random products.</text>
+    <rect x="458" y="296" width="300" height="96" rx="26" fill="#fffaf2"/>
+    <text x="488" y="340" fill="#2e2119" font-family="Georgia,serif" font-size="28" font-weight="700">CTA</text>
+    <text x="488" y="370" fill="#b56f45" font-family="Arial,sans-serif" font-size="15" font-weight="800">Take the free ritual quiz.</text>
+    <rect x="458" y="422" width="300" height="96" rx="26" fill="#fffaf2"/>
+    <text x="488" y="466" fill="#2e2119" font-family="Georgia,serif" font-size="28" font-weight="700">Guardrail</text>
+    <text x="488" y="496" fill="#536b45" font-family="Arial,sans-serif" font-size="15" font-weight="800">No fake before/after claims.</text>
+  </g>
+  <text x="120" y="92" fill="#2e2119" font-family="Georgia,serif" font-size="46" font-weight="700">Content that converts with trust.</text>
+  <text x="122" y="604" fill="#536b45" font-family="Arial,sans-serif" font-size="18" font-weight="800" letter-spacing="3">REELS · SHORTS · POSTS · APPROVAL QUEUE</text>
+</svg>
