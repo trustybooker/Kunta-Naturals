@@ -64,15 +64,18 @@ function productCard(product) {
 
   const action = document.createElement('a');
   action.className = 'product-link';
-  const href = product.checkout_url || product.affiliate_url || '';
-  if (href && !href.includes('TODO_')) {
-    action.href = href;
+  const destination = product.detail_url || product.checkout_url || product.affiliate_url || '';
+  action.href = destination || '#quiz';
+  if (destination.startsWith('http')) {
     action.target = '_blank';
     action.rel = 'sponsored noopener';
-    action.textContent = product.price ? `View — $${Number(product.price).toFixed(2)}` : 'View product';
+  }
+  if (product.product_type === 'digital' && product.price) {
+    action.textContent = `View details - $${Number(product.price).toFixed(2)}`;
+  } else if (product.price) {
+    action.textContent = `View details - $${Number(product.price).toFixed(2)}`;
   } else {
-    action.href = '#quiz';
-    action.textContent = product.price ? `Preview — $${Number(product.price).toFixed(2)}` : 'Get ritual guide first';
+    action.textContent = 'Get ritual guide first';
   }
 
   body.append(meta, title, desc, fulfillment, action);
