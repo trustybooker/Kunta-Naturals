@@ -1,51 +1,113 @@
 # The 3-Minute Natural Self-Care Guide
 
-## Promise
+## Kunta Naturals promise
 
-This guide helps you build a simple natural-inspired self-care ritual you can actually repeat.
+Stop buying random self-care products. Build one simple ritual first, then shop only what fits.
+
+This guide helps you create a natural-inspired self-care routine that is simple, repeatable, and easy to understand. It is not medical advice, and it does not promise skin, hair, or health results. It helps you organize your daily body-care choices so your routine feels cleaner, calmer, and more intentional.
+
+## The ritual rule
+
+A good routine does not need ten products.
+
+Start with five roles:
+
+1. Cleanse
+2. Polish
+3. Moisturize
+4. Scent
+5. Reset
+
+Each product you buy should have a role. If it does not have a role, it is probably clutter.
 
 ## The 3-minute ritual
 
 ### Minute 1: Cleanse
 
-Choose one simple cleanser or soap that fits your preference. Keep the routine gentle and consistent. Do not keep switching products every few days.
+Choose one cleanser, soap, or body wash that you like using. Keep it simple. The goal is to start fresh without creating confusion.
 
-### Minute 2: Exfoliate with intention
+Ask:
 
-Use a luffa or body brush lightly. The goal is not to scrub harder. The goal is to create a consistent, polished-feeling routine.
+- Do I enjoy using this?
+- Does it fit my budget?
+- Would I use it again tomorrow?
+- Is the seller making exaggerated claims?
 
-### Minute 3: Moisturize and reset
+### Minute 2: Polish
 
-After showering, use body oil or body butter while your skin still feels slightly damp. Finish with one scent cue: a light fragrance oil, candle, or calming bathroom reset.
+Use one gentle tool, such as a luffa, washcloth, or body brush. The goal is not harsh scrubbing. The goal is a consistent step that helps the routine feel complete.
 
-## What to buy first
+Use light pressure. Keep tools clean and dry between uses. Replace tools when they look worn.
 
-Start with:
+### Minute 3: Moisturize, scent, and reset
 
-1. One cleansing product
-2. One exfoliation tool
-3. One moisturizer
-4. One scent or calm item
+After showering, choose one moisture step and one scent or calm cue.
 
-Do not buy ten products before you know your ritual.
+Examples:
 
-## Beginner mistakes
+- Body oil
+- Body butter
+- Lotion
+- Clean towel
+- Robe
+- Candle
+- Light scent
+- Organized bathroom shelf
 
-- Buying too many products at once
-- Scrubbing too hard
-- Skipping moisture after showering
-- Using every trending product without a routine
-- Expecting instant transformation
-- Ignoring how the routine feels
+The reset step matters because the routine should end with order, not clutter.
 
 ## Your first ritual card
 
+Fill this in before buying anything else.
+
 Cleanse:
-Exfoliate:
+
+Polish:
+
 Moisturize:
+
 Scent:
+
 Reset:
 
-## Soft CTA
+## What to buy first
 
-When you are ready, use the 7-Day Body Ritual Guide to turn this into a simple one-week routine.
+Start with one item from each role:
+
+- Cleanse: one soap, cleanser, or wash
+- Polish: one luffa, washcloth, or brush
+- Moisturize: one body oil, lotion, or butter
+- Scent: one light scent cue
+- Reset: one towel, basket, tray, or checklist card
+
+Do not buy duplicates until you know what you actually use.
+
+## Beginner mistakes to avoid
+
+- Buying too many products at once
+- Changing products every few days
+- Scrubbing too hard
+- Skipping the reset step
+- Buying because of a viral video instead of a real need
+- Believing guaranteed-result claims
+- Choosing products without knowing their role
+
+## Your first seven-day challenge
+
+For the next seven days, repeat the same simple ritual. Do not add anything new unless something clearly does not fit.
+
+Daily check-in:
+
+Day:
+
+Did I complete the ritual? Yes / No
+
+What felt easy?
+
+What felt unnecessary?
+
+What would I repeat?
+
+## Next step
+
+After you complete this starter guide, use the 7-Day Body Ritual Guide to turn the routine into a full week of repeatable steps.
