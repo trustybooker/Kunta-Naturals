@@ -1,0 +1,47 @@
+[
+  {
+    "id": "free-quiz",
+    "name": "The Rooted Ritual Quiz",
+    "price": 0,
+    "type": "lead magnet",
+    "promise": "Find your simple natural self-care ritual type.",
+    "cta": "Take the free quiz",
+    "status": "ready-copy"
+  },
+  {
+    "id": "free-guide",
+    "name": "The 3-Minute Natural Self-Care Guide",
+    "price": 0,
+    "type": "free PDF",
+    "promise": "Build a simple cleanse, exfoliate, moisturize, scent, and reset routine.",
+    "cta": "Get the free guide",
+    "status": "ready-copy"
+  },
+  {
+    "id": "body-ritual-guide",
+    "name": "The 7-Day Body Ritual Guide",
+    "price": 9,
+    "type": "paid digital product",
+    "promise": "Build a simple body-care ritual in one week.",
+    "cta": "Start the 7-day ritual",
+    "status": "ready-copy"
+  },
+  {
+    "id": "glow-scent-bundle",
+    "name": "Natural Glow + Scent Ritual Bundle",
+    "price": 27,
+    "type": "paid digital bundle",
+    "promise": "Build a clean body-care and scent routine without buying random products.",
+    "cta": "Build my full ritual",
+    "status": "ready-copy"
+  },
+  {
+    "id": "ritual-vault",
+    "name": "Kunta Naturals Ritual Vault",
+    "price": 47,
+    "type": "premium digital product",
+    "promise": "The complete natural-inspired body, scent, scalp, and calm self-care system.",
+    "cta": "Get the ritual vault",
+    "status": "ready-copy"
+  }
+]
