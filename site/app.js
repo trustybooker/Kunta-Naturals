@@ -27,6 +27,10 @@ function productCard(product) {
   article.className = `public-product-card ${product.fulfillment_model || ''}`;
   article.dataset.type = product.product_type || 'product';
 
+  const brandStrip = document.createElement('div');
+  brandStrip.className = 'product-brand-strip';
+  brandStrip.innerHTML = '<img src="assets/logo-mark.svg" alt="" aria-hidden="true"><span>Kunta Naturals</span>';
+
   const media = document.createElement('div');
   media.className = 'product-media';
 
@@ -79,7 +83,7 @@ function productCard(product) {
   }
 
   body.append(meta, title, desc, fulfillment, action);
-  article.append(media, body);
+  article.append(brandStrip, media, body);
   return article;
 }
 
