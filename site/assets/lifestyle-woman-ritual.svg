@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 680" role="img" aria-labelledby="title desc">
+  <title id="title">Woman preparing a simple natural self-care ritual</title>
+  <desc id="desc">A premium editorial illustration of a woman arranging towel, oil, soap, and a ritual card on a warm bathroom counter.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffaf2"/><stop offset="1" stop-color="#e8d6bd"/></linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="22" stdDeviation="18" flood-color="#2e2119" flood-opacity="0.13"/></filter>
+  </defs>
+  <rect width="900" height="680" rx="48" fill="url(#bg)"/>
+  <circle cx="740" cy="122" r="98" fill="#c9974a" opacity=".17"/>
+  <circle cx="160" cy="560" r="130" fill="#536b45" opacity=".12"/>
+  <g filter="url(#soft)">
+    <rect x="110" y="430" width="680" height="104" rx="52" fill="#b56f45" opacity=".92"/>
+    <ellipse cx="450" cy="430" rx="340" ry="58" fill="#e8d6bd"/>
+  </g>
+  <g filter="url(#soft)">
+    <path d="M428 184c54-92 185-49 177 58-8 104-137 138-198 63-32-39-20-90 21-121z" fill="#2e2119"/>
+    <circle cx="497" cy="262" r="70" fill="#8f5b3e"/>
+    <path d="M428 250c38-17 68-46 91-87 42 13 68 45 80 95-8-91-89-135-171-74-31 23-44 62-34 103 6-15 18-27 34-37z" fill="#2e2119"/>
+    <path d="M420 345c44 38 120 38 164 0 50 25 87 73 100 135H320c13-62 50-110 100-135z" fill="#536b45"/>
+    <path d="M441 351c38 26 86 26 124 0l-13 58c-26 17-59 17-85 0l-26-58z" fill="#fffaf2" opacity=".9"/>
+    <path d="M360 440c-60-36-118-40-174-13" fill="none" stroke="#8f5b3e" stroke-width="28" stroke-linecap="round"/>
+    <path d="M630 438c54-32 106-31 156 3" fill="none" stroke="#8f5b3e" stroke-width="28" stroke-linecap="round"/>
+  </g>
+  <g filter="url(#soft)">
+    <rect x="145" y="358" width="132" height="104" rx="24" fill="#fffaf2"/>
+    <path d="M166 384h88" stroke="#e8d6bd" stroke-width="9" stroke-linecap="round"/>
+    <path d="M166 410h66" stroke="#e8d6bd" stroke-width="9" stroke-linecap="round"/>
+    <path d="M166 436h76" stroke="#e8d6bd" stroke-width="9" stroke-linecap="round"/>
+  </g>
+  <g filter="url(#soft)">
+    <rect x="654" y="340" width="78" height="142" rx="24" fill="#2e2119"/>
+    <rect x="670" y="316" width="46" height="42" rx="14" fill="#c9974a"/>
+    <rect x="674" y="376" width="38" height="72" rx="14" fill="#c9974a" opacity=".6"/>
+    <rect x="548" y="382" width="90" height="60" rx="18" fill="#fffaf2"/>
+    <rect x="562" y="402" width="58" height="8" rx="4" fill="#e8d6bd"/>
+  </g>
+  <text x="110" y="88" fill="#2e2119" font-family="Georgia,serif" font-size="48" font-weight="700">A ritual you can repeat.</text>
+  <text x="112" y="128" fill="#536b45" font-family="Arial,sans-serif" font-size="18" font-weight="800" letter-spacing="3">BODY CARE · SCENT · RESET</text>
+</svg>
