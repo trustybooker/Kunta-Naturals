@@ -24,12 +24,24 @@ function publicImagePath(product) {
 
 function productCard(product) {
   const article = document.createElement('article');
-  article.className = 'public-product-card';
+  article.className = `public-product-card ${product.fulfillment_model || ''}`;
+  article.dataset.type = product.product_type || 'product';
+
+  const media = document.createElement('div');
+  media.className = 'product-media';
 
   const img = document.createElement('img');
   img.src = publicImagePath(product);
   img.alt = product.name || 'Kunta Naturals product';
   img.onerror = () => { img.src = 'assets/logo.svg'; };
+
+  const logo = document.createElement('img');
+  logo.className = 'product-logo-badge';
+  logo.src = 'assets/logo-mark.svg';
+  logo.alt = '';
+  logo.setAttribute('aria-hidden', 'true');
+
+  media.append(img, logo);
 
   const body = document.createElement('div');
   const meta = document.createElement('p');
@@ -42,6 +54,14 @@ function productCard(product) {
   const desc = document.createElement('p');
   desc.textContent = product.short_description || product.description || 'Product details coming soon.';
 
+  const fulfillment = document.createElement('p');
+  fulfillment.className = 'fulfillment-note';
+  fulfillment.textContent = product.fulfillment_model?.includes('pod') || product.fulfillment_model?.includes('supplier') || product.fulfillment_model?.includes('partner')
+    ? 'No Kunta Naturals inventory or shipping.'
+    : product.product_type === 'digital'
+      ? 'Owned digital product path.'
+      : 'Third-party fulfillment path.';
+
   const action = document.createElement('a');
   action.className = 'product-link';
   const href = product.checkout_url || product.affiliate_url || '';
@@ -52,11 +72,11 @@ function productCard(product) {
     action.textContent = product.price ? `View — $${Number(product.price).toFixed(2)}` : 'View product';
   } else {
     action.href = '#quiz';
-    action.textContent = 'Get ritual guide first';
+    action.textContent = product.price ? `Preview — $${Number(product.price).toFixed(2)}` : 'Get ritual guide first';
   }
 
-  body.append(meta, title, desc, action);
-  article.append(img, body);
+  body.append(meta, title, desc, fulfillment, action);
+  article.append(media, body);
   return article;
 }
 
