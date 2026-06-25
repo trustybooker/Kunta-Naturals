@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Kunta Naturals Product",
+  "type": "object",
+  "required": ["id", "name", "slug", "product_type", "status"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "slug": { "type": "string" },
+    "category": { "type": "string" },
+    "ritual_type": { "type": "string" },
+    "audience": { "type": "string" },
+    "product_type": { "enum": ["digital", "affiliate", "physical", "bundle"] },
+    "short_description": { "type": "string" },
+    "description": { "type": "string" },
+    "price": { "type": "number" },
+    "compare_at_price": { "type": ["number", "null"] },
+    "currency": { "type": "string" },
+    "image_url": { "type": "string" },
+    "media_gallery": { "type": "array", "items": { "type": "string" } },
+    "affiliate_url": { "type": "string" },
+    "checkout_url": { "type": "string" },
+    "inventory_status": { "enum": ["not_applicable", "in_stock", "out_of_stock", "preorder", "coming_soon"] },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "compliance_notes": { "type": "string" },
+    "disclosure_required": { "type": "boolean" },
+    "status": { "enum": ["draft", "review", "active", "archived"] }
+  }
+}
