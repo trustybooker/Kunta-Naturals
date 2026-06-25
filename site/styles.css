@@ -159,7 +159,7 @@ h1 {
   flex-wrap: wrap;
 }
 
-.button, button, .offers a {
+.button, button, .offers a, .product-link {
   border: none;
   border-radius: 999px;
   padding: 0.9rem 1.2rem;
@@ -169,7 +169,7 @@ h1 {
   cursor: pointer;
 }
 
-.primary, button {
+.primary, button, .product-link {
   background: var(--brown);
   color: var(--white);
 }
@@ -183,7 +183,7 @@ section {
   padding: 4rem 6vw;
 }
 
-.problem, .visual-story, .quiz, .offers, .kits, .email {
+.problem, .visual-story, .quiz, .offers, .store-section, .email {
   border-top: 1px solid var(--sand);
 }
 
@@ -260,12 +260,12 @@ h2 {
   margin-top: 0;
 }
 
-.cards, .offer-grid, .kit-grid {
+.cards, .offer-grid, .public-product-grid {
   display: grid;
   gap: 1rem;
 }
 
-.cards, .kit-grid {
+.cards {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
@@ -273,7 +273,11 @@ h2 {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-article, .result {
+.public-product-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+article, .result, .public-product-card {
   background: var(--white);
   border: 1px solid var(--sand);
   border-radius: 1.25rem;
@@ -315,7 +319,8 @@ article, .result {
   margin-bottom: 0.75rem;
 }
 
-.price {
+.price,
+.product-meta {
   color: var(--clay);
   font-family: Arial, sans-serif;
   font-weight: 900;
@@ -339,18 +344,29 @@ label {
   display: none;
 }
 
-.kit-grid article {
-  min-height: 220px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.store-section {
+  background:
+    radial-gradient(circle at 85% 15%, rgba(83, 107, 69, 0.11), transparent 28%),
+    linear-gradient(180deg, var(--cream), var(--white));
 }
 
-.kit-mark {
-  width: fit-content;
-  background: var(--brown);
-  color: var(--white);
-  border-color: var(--brown);
+.public-product-card {
+  display: grid;
+  gap: 1rem;
+}
+
+.public-product-card img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 1rem;
+  border: 1px solid var(--sand);
+  background: var(--cream);
+}
+
+.product-link {
+  display: inline-flex;
+  margin-top: 0.5rem;
 }
 
 .email {
@@ -377,7 +393,8 @@ footer {
 }
 
 @media (max-width: 1100px) {
-  .offer-grid {
+  .offer-grid,
+  .public-product-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .visual-grid {
@@ -396,7 +413,7 @@ footer {
 }
 
 @media (max-width: 900px) {
-  .cards, .offer-grid, .kit-grid {
+  .cards, .offer-grid, .public-product-grid {
     grid-template-columns: 1fr;
   }
   .site-header {
