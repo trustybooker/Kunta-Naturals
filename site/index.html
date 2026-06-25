@@ -5,11 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kunta Naturals | Pure. Rooted. Real.</title>
   <meta name="description" content="Build your 3-minute natural self-care ritual with Kunta Naturals. Simple body-care, scent, hair/scalp, and calming rituals for real life.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="site-header">
-    <div class="brand">Kunta Naturals</div>
+    <a class="brand" href="#top" aria-label="Kunta Naturals home">
+      <img src="assets/logo-mark.svg" alt="" aria-hidden="true">
+      <span>Kunta Naturals</span>
+    </a>
     <nav>
       <a href="#quiz">Quiz</a>
       <a href="#offers">Guides</a>
@@ -18,33 +22,42 @@
     </nav>
   </header>
 
-  <main>
+  <main id="top">
     <section class="hero">
       <div class="hero-copy">
         <p class="eyebrow">Pure. Rooted. Real.</p>
-        <h1>Build your 3-minute natural self-care ritual.</h1>
-        <p class="lead">Stop buying random self-care products. Kunta Naturals helps you build one simple natural-inspired ritual that fits your body, scent, hair, and lifestyle.</p>
+        <h1>Simple natural rituals for real life.</h1>
+        <p class="lead">Kunta Naturals helps you stop buying random self-care products and build one simple ritual that fits your body, scent, hair, and lifestyle.</p>
         <div class="actions">
           <a class="button primary" href="#quiz">Take the Free Ritual Quiz</a>
           <a class="button secondary" href="#offers">See the Guides</a>
         </div>
       </div>
-      <div class="hero-visual">
-        <img src="assets/hero-ritual.svg" alt="Illustration of a Kunta Naturals ritual tray with luffa, oil, soap, candle, and towel">
-      </div>
+      <aside class="identity-card" aria-label="Kunta Naturals brand identity">
+        <img class="identity-logo" src="assets/logo.svg" alt="Kunta Naturals logo">
+        <div class="identity-points">
+          <span>Cleanse</span>
+          <span>Polish</span>
+          <span>Moisturize</span>
+          <span>Scent</span>
+          <span>Reset</span>
+        </div>
+      </aside>
     </section>
 
     <section class="problem">
+      <p class="eyebrow">The catch</p>
       <h2>Your routine should feel simple, not stressful.</h2>
       <div class="cards">
-        <article><span class="icon">01</span><h3>Too many products?</h3><p>Start with the right ritual before buying more.</p></article>
-        <article><span class="icon">02</span><h3>No clear routine?</h3><p>Use cleanse, exfoliate, moisturize, scent, and reset.</p></article>
-        <article><span class="icon">03</span><h3>Want real guidance?</h3><p>Get beginner-friendly steps, product checklists, and simple routines.</p></article>
+        <article><span class="icon">01</span><h3>Stop the product chaos</h3><p>Buy by ritual role, not by random trend.</p></article>
+        <article><span class="icon">02</span><h3>Build one repeatable rhythm</h3><p>Use cleanse, polish, moisturize, scent, and reset.</p></article>
+        <article><span class="icon">03</span><h3>Start before inventory</h3><p>Guides, checklists, and starter collections come first.</p></article>
       </div>
     </section>
 
-    <section id="quiz" class="quiz visual-section">
+    <section id="quiz" class="quiz split-section">
       <div>
+        <p class="eyebrow">Find your path</p>
         <h2>Find your ritual type</h2>
         <p>Choose the answer that sounds most like you.</p>
         <form id="ritualQuiz">
@@ -57,58 +70,65 @@
         </form>
         <div id="quizResult" class="result"></div>
       </div>
-      <img class="section-image" src="assets/glow-kit.svg" alt="Glow shower kit illustration with luffa, soap, body oil, and towel">
+      <div class="ritual-board">
+        <img src="assets/logo-mark.svg" alt="Kunta Naturals logo mark">
+        <h3>The 3-minute ritual</h3>
+        <ol>
+          <li>Choose one cleanse product.</li>
+          <li>Use one gentle tool.</li>
+          <li>Finish with moisture and scent.</li>
+        </ol>
+      </div>
     </section>
 
-    <section id="offers" class="offers visual-section reverse">
-      <img class="section-image" src="assets/guide-covers.svg" alt="Kunta Naturals digital guide cover illustrations">
-      <div>
-        <h2>Start with the right guide</h2>
-        <div class="offer-grid">
-          <article>
-            <p class="price">Free</p>
-            <h3>The 3-Minute Natural Self-Care Guide</h3>
-            <p>Build your first cleanse, exfoliate, moisturize, scent, and reset routine.</p>
-            <a href="TODO_ADD_EMAIL_CAPTURE_LINK">Get the free guide</a>
-          </article>
-          <article>
-            <p class="price">$9</p>
-            <h3>The 7-Day Body Ritual Guide</h3>
-            <p>A one-week routine with daily steps, product checklist, and simple tracking pages.</p>
-            <a href="TODO_ADD_CHECKOUT_LINK_9">Start the 7-day ritual</a>
-          </article>
-          <article>
-            <p class="price">$27</p>
-            <h3>Natural Glow + Scent Ritual Bundle</h3>
-            <p>Body-care, moisture, and scent layering in one beginner-friendly bundle.</p>
-            <a href="TODO_ADD_CHECKOUT_LINK_27">Build my full ritual</a>
-          </article>
-          <article>
-            <p class="price">$47</p>
-            <h3>Kunta Naturals Ritual Vault</h3>
-            <p>The complete body, scent, scalp, and calm self-care system.</p>
-            <a href="TODO_ADD_CHECKOUT_LINK_47">Get the vault</a>
-          </article>
-        </div>
+    <section id="offers" class="offers">
+      <p class="eyebrow">Digital products</p>
+      <h2>Start with the right guide</h2>
+      <div class="offer-grid">
+        <article>
+          <p class="price">Free</p>
+          <h3>The 3-Minute Natural Self-Care Guide</h3>
+          <p>Build your first cleanse, polish, moisturize, scent, and reset routine.</p>
+          <a href="TODO_ADD_EMAIL_CAPTURE_LINK">Get the free guide</a>
+        </article>
+        <article>
+          <p class="price">$9</p>
+          <h3>The 7-Day Body Ritual Guide</h3>
+          <p>A one-week routine with daily steps, product checklist, and simple tracking pages.</p>
+          <a href="TODO_ADD_CHECKOUT_LINK_9">Start the 7-day ritual</a>
+        </article>
+        <article>
+          <p class="price">$27</p>
+          <h3>Natural Glow + Scent Ritual Bundle</h3>
+          <p>Body-care, moisture, and scent layering in one beginner-friendly bundle.</p>
+          <a href="TODO_ADD_CHECKOUT_LINK_27">Build my full ritual</a>
+        </article>
+        <article>
+          <p class="price">$47</p>
+          <h3>Kunta Naturals Ritual Vault</h3>
+          <p>The complete body, scent, scalp, and calm self-care system.</p>
+          <a href="TODO_ADD_CHECKOUT_LINK_47">Get the vault</a>
+        </article>
       </div>
     </section>
 
     <section id="kits" class="kits">
+      <p class="eyebrow">Affiliate-ready collections</p>
       <h2>Starter product collections</h2>
-      <p>These collections are placeholders until official affiliate links are added.</p>
+      <p>These are structured collections waiting for official affiliate links and product photos.</p>
       <div class="kit-grid">
         <article>
-          <img src="assets/glow-kit.svg" alt="Glow Shower Kit illustration">
+          <span class="kit-mark">Glow</span>
           <h3>Glow Shower Kit</h3>
           <p>Luffa, gentle soap, body oil, and body butter.</p>
         </article>
         <article>
-          <img src="assets/scent-kit.svg" alt="Scent Layering Kit illustration">
+          <span class="kit-mark">Scent</span>
           <h3>Scent Layering Kit</h3>
           <p>Body oil, fragrance oil, candle, and scent card.</p>
         </article>
         <article>
-          <img src="assets/scalp-kit.svg" alt="Hair and Scalp Ritual Kit illustration">
+          <span class="kit-mark">Scalp</span>
           <h3>Hair & Scalp Ritual Kit</h3>
           <p>Scalp brush, hair oil, and night routine accessory.</p>
         </article>
