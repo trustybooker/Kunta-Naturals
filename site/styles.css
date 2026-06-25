@@ -183,8 +183,70 @@ section {
   padding: 4rem 6vw;
 }
 
-.problem, .quiz, .offers, .kits, .email {
+.problem, .visual-story, .quiz, .offers, .kits, .email {
   border-top: 1px solid var(--sand);
+}
+
+.section-heading {
+  max-width: 980px;
+  margin-bottom: 2rem;
+}
+
+.section-heading p:last-child {
+  max-width: 760px;
+  font-size: 1.15rem;
+}
+
+.visual-story {
+  background:
+    radial-gradient(circle at 15% 10%, rgba(181, 111, 69, 0.13), transparent 25%),
+    linear-gradient(180deg, rgba(255, 250, 242, 0.45), rgba(247, 239, 227, 0.95));
+}
+
+.visual-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  grid-template-areas:
+    "large family"
+    "large studio";
+  gap: 1rem;
+}
+
+.visual-card {
+  background: var(--white);
+  border: 1px solid var(--sand);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 22px 70px rgba(46, 33, 25, 0.11);
+}
+
+.visual-card.large { grid-area: large; }
+.visual-card:nth-child(2) { grid-area: family; }
+.visual-card:nth-child(3) { grid-area: studio; }
+
+.visual-card img {
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  object-fit: cover;
+  border-bottom: 1px solid var(--sand);
+}
+
+.visual-card.large img {
+  aspect-ratio: 4 / 3;
+}
+
+.visual-card div {
+  padding: 1.1rem;
+}
+
+.visual-card h3 {
+  margin: 0.85rem 0 0.35rem;
+  font-size: 1.65rem;
+  line-height: 1;
+}
+
+.visual-card p {
+  margin-bottom: 0;
 }
 
 .split-section {
@@ -320,6 +382,13 @@ footer {
 @media (max-width: 1100px) {
   .offer-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .visual-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "large"
+      "family"
+      "studio";
   }
 }
 
