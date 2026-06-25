@@ -70,7 +70,7 @@
     "description": "A branded affirmation canvas fulfilled by a print-on-demand partner.",
     "price": 34.99,
     "currency": "USD",
-    "image_url": "assets/ritual-shelf.svg",
+    "image_url": "assets/canvas-cover.svg",
     "affiliate_url": "",
     "checkout_url": "TODO_ADD_PRINT_ON_DEMAND_LINK_CANVAS",
     "tags": ["print-on-demand", "wall-art", "reset"],
