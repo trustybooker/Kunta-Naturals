@@ -32,26 +32,13 @@ function productCard(product) {
   brandStrip.innerHTML = '<img src="assets/logo-mark.svg" alt="" aria-hidden="true"><span>Kunta Naturals</span>';
 
   const media = document.createElement('div');
-  media.className = product.crop_class ? `product-media board-crop ${product.crop_class}` : 'product-media';
+  media.className = 'product-media';
 
-  if (!product.crop_class) {
-    const img = document.createElement('img');
-    img.src = publicImagePath(product);
-    img.alt = product.name || 'Kunta Naturals product';
-    img.onerror = () => { img.src = 'assets/logo.svg'; };
-    media.appendChild(img);
-  } else {
-    media.setAttribute('role', 'img');
-    media.setAttribute('aria-label', product.name || 'Kunta Naturals product image');
-  }
-
-  const logo = document.createElement('img');
-  logo.className = 'product-logo-badge';
-  logo.src = 'assets/logo-mark.svg';
-  logo.alt = '';
-  logo.setAttribute('aria-hidden', 'true');
-
-  media.appendChild(logo);
+  const img = document.createElement('img');
+  img.src = publicImagePath(product);
+  img.alt = product.name || 'Kunta Naturals product';
+  img.onerror = () => { img.src = 'assets/logo.svg'; };
+  media.appendChild(img);
 
   const body = document.createElement('div');
   const meta = document.createElement('p');
