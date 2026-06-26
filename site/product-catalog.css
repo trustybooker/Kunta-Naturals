@@ -1,44 +1,33 @@
 :root {
-  --kn-board-products: url("assets/ChatGPT Image Jun 25, 2026, 08_52_45 PM.png");
-  --kn-board-lifestyle: url("assets/ChatGPT Image Jun 25, 2026, 08_13_05 PM.png");
+  --kn-board-products: url("assets/ChatGPT%20Image%20Jun%2025%2C%202026%2C%2008_52_45%20PM.png");
+  --kn-board-lifestyle: url("assets/ChatGPT%20Image%20Jun%2025%2C%202026%2C%2008_13_05%20PM.png");
 }
 
-.visual-card {
-  min-width: 0;
-}
-
+.visual-card { min-width: 0; }
 .visual-card h3,
-.visual-card p {
-  overflow-wrap: anywhere;
-}
+.visual-card p { overflow-wrap: anywhere; }
 
 .visual-card.large img {
-  content: var(--kn-board-products);
   object-fit: cover;
   object-position: 50% 14%;
 }
 
 .visual-card.male-card img {
-  content: var(--kn-board-lifestyle);
   object-fit: cover;
   object-position: 78% 22%;
 }
 
-.visual-card:has(img[src="assets/family-bathroom-reset.svg"]) img {
-  content: var(--kn-board-lifestyle);
+.visual-card.family-card img {
   object-fit: cover;
   object-position: 54% 68%;
 }
 
-.visual-card:has(img[src="assets/logo.svg"]) img {
+.visual-card.brand-card img,
+.identity-logo {
+  width: 100%;
   object-fit: contain !important;
   padding: 2rem;
   background: var(--white);
-}
-
-.identity-logo {
-  width: 100%;
-  object-fit: contain;
 }
 
 .public-product-grid {
@@ -69,6 +58,8 @@
   color: var(--brown);
 }
 
+.public-product-card.has-brand::before { display: none; }
+
 .product-brand-strip {
   display: inline-flex;
   align-items: center;
@@ -82,15 +73,6 @@
   width: 38px;
   height: 38px;
   border-radius: 11px;
-}
-
-.public-product-card .product-brand-strip + .product-media,
-.public-product-card .product-brand-strip + .product-media + div {
-  margin-top: 0;
-}
-
-.public-product-card:has(.product-brand-strip)::before {
-  display: none;
 }
 
 .product-media {
@@ -118,10 +100,7 @@
   background-position: 50% 50%;
 }
 
-.board-crop.from-lifestyle {
-  background-image: var(--kn-board-lifestyle);
-}
-
+.board-crop.from-lifestyle { background-image: var(--kn-board-lifestyle); }
 .crop-guide { background-position: 7% 10%; }
 .crop-journal { background-position: 5% 55%; }
 .crop-cards { background-position: 28% 55%; }
@@ -150,9 +129,7 @@
   line-height: 1;
 }
 
-.public-product-card p {
-  margin: 0.35rem 0;
-}
+.public-product-card p { margin: 0.35rem 0; }
 
 .fulfillment-note {
   font-family: Arial, sans-serif;
@@ -162,19 +139,13 @@
 }
 
 @media (max-width: 1200px) {
-  .public-product-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+  .public-product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (max-width: 1100px) {
-  .public-product-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  .public-product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 900px) {
-  .public-product-grid {
-    grid-template-columns: 1fr;
-  }
+  .public-product-grid { grid-template-columns: 1fr; }
 }
