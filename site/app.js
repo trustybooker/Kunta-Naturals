@@ -24,7 +24,7 @@ function publicImagePath(product) {
 
 function productCard(product) {
   const article = document.createElement('article');
-  article.className = `public-product-card ${product.fulfillment_model || ''}`;
+  article.className = `public-product-card has-brand ${product.fulfillment_model || ''}`;
   article.dataset.type = product.product_type || 'product';
 
   const brandStrip = document.createElement('div');
