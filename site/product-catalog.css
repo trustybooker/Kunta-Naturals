@@ -1,3 +1,46 @@
+:root {
+  --kn-board-products: url("assets/ChatGPT Image Jun 25, 2026, 08_52_45 PM.png");
+  --kn-board-lifestyle: url("assets/ChatGPT Image Jun 25, 2026, 08_13_05 PM.png");
+}
+
+.visual-card {
+  min-width: 0;
+}
+
+.visual-card h3,
+.visual-card p {
+  overflow-wrap: anywhere;
+}
+
+.visual-card.large img {
+  content: var(--kn-board-products);
+  object-fit: cover;
+  object-position: 50% 14%;
+}
+
+.visual-card.male-card img {
+  content: var(--kn-board-lifestyle);
+  object-fit: cover;
+  object-position: 78% 22%;
+}
+
+.visual-card:has(img[src="assets/family-bathroom-reset.svg"]) img {
+  content: var(--kn-board-lifestyle);
+  object-fit: cover;
+  object-position: 54% 68%;
+}
+
+.visual-card:has(img[src="assets/logo.svg"]) img {
+  object-fit: contain !important;
+  padding: 2rem;
+  background: var(--white);
+}
+
+.identity-logo {
+  width: 100%;
+  object-fit: contain;
+}
+
 .public-product-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: stretch;
@@ -67,6 +110,28 @@
   background: transparent;
 }
 
+.board-crop {
+  aspect-ratio: 4 / 3;
+  background-image: var(--kn-board-products);
+  background-repeat: no-repeat;
+  background-size: 300% auto;
+  background-position: 50% 50%;
+}
+
+.board-crop.from-lifestyle {
+  background-image: var(--kn-board-lifestyle);
+}
+
+.crop-guide { background-position: 7% 10%; }
+.crop-journal { background-position: 5% 55%; }
+.crop-cards { background-position: 28% 55%; }
+.crop-canvas { background-position: 50% 55%; }
+.crop-tote { background-position: 70% 55%; }
+.crop-robe { background-position: 82% 55%; }
+.crop-shirt { background-position: 94% 55%; }
+.crop-planner { background-position: 5% 88%; }
+.crop-family { background-position: 64% 88%; }
+
 .product-logo-badge {
   position: absolute;
   width: 58px;
@@ -76,6 +141,7 @@
   border-radius: 14px;
   border: 2px solid rgba(255,250,242,0.9);
   box-shadow: 0 12px 28px rgba(46,33,25,0.22);
+  background: var(--brown);
 }
 
 .public-product-card h3 {
