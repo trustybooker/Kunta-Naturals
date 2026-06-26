@@ -7,19 +7,33 @@
 .visual-card h3,
 .visual-card p { overflow-wrap: anywhere; }
 
-.visual-card.large img {
+.visual-card.large,
+.visual-card.male-card,
+.visual-card.family-card { overflow: hidden; }
+
+.visual-card.large img,
+.visual-card.male-card img,
+.visual-card.family-card img {
+  height: clamp(250px, 28vw, 360px);
+  width: 100%;
+  max-width: none;
   object-fit: cover;
-  object-position: 50% 14%;
+  border-bottom: 1px solid var(--sand);
+}
+
+.visual-card.large img {
+  transform: scale(2.35);
+  transform-origin: 28% 16%;
 }
 
 .visual-card.male-card img {
-  object-fit: cover;
-  object-position: 78% 22%;
+  transform: scale(2.7);
+  transform-origin: 78% 20%;
 }
 
 .visual-card.family-card img {
-  object-fit: cover;
-  object-position: 54% 68%;
+  transform: scale(2.45);
+  transform-origin: 52% 58%;
 }
 
 .visual-card.brand-card img,
@@ -96,20 +110,20 @@
   aspect-ratio: 4 / 3;
   background-image: var(--kn-board-products);
   background-repeat: no-repeat;
-  background-size: 300% auto;
+  background-size: 760% auto;
   background-position: 50% 50%;
 }
 
 .board-crop.from-lifestyle { background-image: var(--kn-board-lifestyle); }
-.crop-guide { background-position: 7% 10%; }
+.crop-guide { background-position: 4% 11%; }
 .crop-journal { background-position: 5% 55%; }
-.crop-cards { background-position: 28% 55%; }
-.crop-canvas { background-position: 50% 55%; }
-.crop-tote { background-position: 70% 55%; }
-.crop-robe { background-position: 82% 55%; }
-.crop-shirt { background-position: 94% 55%; }
-.crop-planner { background-position: 5% 88%; }
-.crop-family { background-position: 64% 88%; }
+.crop-cards { background-position: 24% 55%; }
+.crop-canvas { background-position: 43% 55%; }
+.crop-tote { background-position: 61% 55%; }
+.crop-robe { background-position: 78% 55%; }
+.crop-shirt { background-position: 96% 55%; }
+.crop-planner { background-position: 5% 78%; }
+.crop-family { background-position: 65% 78%; }
 
 .product-logo-badge {
   position: absolute;
