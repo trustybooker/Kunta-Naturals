@@ -81,7 +81,7 @@ function productCard(product) {
 
   const action = document.createElement('a');
   action.className = product.checkout_status?.startsWith('pending') ? 'product-link pending-link' : 'product-link';
-  const destination = product.detail_url || product.checkout_url || product.delivery_url || '';
+  const destination = product.detail_url || product.checkout_url || product.delivery_url || product.affiliate_url || '';
   action.href = destination || '#quiz';
   if (destination.startsWith('http')) {
     action.target = '_blank';
