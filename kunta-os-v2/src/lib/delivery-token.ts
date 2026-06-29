@@ -1,7 +1,14 @@
 import crypto from 'node:crypto';
 
 function getSecret() {
-  return process.env.DELIVERY_TOKEN_SECRET || process.env.STRIPE_WEBHOOK_SECRET || 'dev-only-delivery-secret-change-me';
+  const configuredSecret = process.env.DELIVERY_TOKEN_SECRET || process.env.STRIPE_WEBHOOK_SECRET;
+  if (configuredSecret) return configuredSecret;
+
+  if (process.env.NODE_ENV !== 'production') {
+    return 'dev-only-delivery-secret-change-me';
+  }
+
+  throw new Error('DELIVERY_TOKEN_SECRET is required in production.');
 }
 
 export function createDeliveryToken(sessionId: string, productId: string) {
@@ -26,7 +33,11 @@ export function parseDeliveryToken(token: string) {
   if (!sessionId || !productId) return null;
 
   const expected = crypto.createHmac('sha256', getSecret()).update(`${sessionId}:${productId}`).digest('base64url');
-  const valid = crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
+  const signatureBuffer = Buffer.from(signature);
+  const expectedBuffer = Buffer.from(expected);
+
+  if (signatureBuffer.length !== expectedBuffer.length) return null;
+  const valid = crypto.timingSafeEqual(signatureBuffer, expectedBuffer);
 
   if (!valid) return null;
   return { sessionId, productId };
