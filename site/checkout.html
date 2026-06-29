@@ -8,36 +8,39 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="product-catalog.css">
+  <link rel="stylesheet" href="visual-truth.css">
 </head>
 <body>
   <header class="site-header">
     <a class="brand" href="/" aria-label="Kunta Naturals home"><img src="assets/logo-mark.svg" alt="" aria-hidden="true"><span>Kunta Naturals</span></a>
-    <nav><a href="/">Home</a><a href="/#store">Shop</a><a href="/digital-products.html">Digital Products</a></nav>
+    <nav><a href="/">Home</a><a href="/#store">Shop</a><a href="/digital-products.html">Digital Products</a><a href="/free-products.html">Free</a></nav>
   </header>
   <main>
     <section class="hero">
       <div class="hero-copy">
         <p class="eyebrow">Secure checkout</p>
-        <h1 id="checkoutTitle">Checkout is being connected.</h1>
-        <p class="lead" id="checkoutMessage">Kunta Naturals uses external secure checkout and delivery providers for paid products. Real checkout links will appear here after the payment provider is connected.</p>
+        <h1 id="checkoutTitle">Kunta Naturals checkout</h1>
+        <p class="lead" id="checkoutMessage">Kunta Naturals uses Stripe-hosted checkout for paid digital products once the backend keys and webhook are connected.</p>
+        <form id="checkoutForm" class="checkout-form">
+          <label>Email <input name="customerEmail" type="email" autocomplete="email" required placeholder="you@example.com"></label>
+          <label class="checkbox-line"><input name="termsAccepted" type="checkbox" required> I understand this is a digital self-care product. It provides general education only and does not provide medical advice, cure claims, or guaranteed outcomes.</label>
+          <button type="submit">Continue to secure checkout</button>
+        </form>
+        <p id="checkoutStatus" class="small" role="status">Loading checkout configuration...</p>
         <div class="actions">
-          <a class="button primary" id="checkoutButton" href="/#store">Return to shop</a>
-          <a class="button secondary" href="/thank-you.html?product=free-guide">Get the free guide</a>
+          <a class="button secondary" href="/free-products.html">Start with free products</a>
+          <a class="button secondary" href="/#store">Return to shop</a>
         </div>
       </div>
-      <aside class="identity-card"><img class="identity-logo" src="assets/logo.svg" alt="Kunta Naturals logo"></aside>
+      <aside class="identity-card"><img id="checkoutImage" class="identity-logo" src="assets/logo.svg" alt="Kunta Naturals product"></aside>
     </section>
     <section class="problem">
       <p class="eyebrow">Important</p>
-      <h2>We do not store payment details on this website.</h2>
-      <p>Paid products should be processed by a secure payment provider such as Gumroad, Payhip, Stripe, or Shopify. Digital delivery for paid files should also happen through that provider or through the private Kunta Naturals OS backend.</p>
+      <h2>Payment details are handled by Stripe, not stored on this website.</h2>
+      <p>Paid delivery must remain protected behind checkout and private delivery. No paid PDF or ZIP files should be placed in the public GitHub Pages site.</p>
     </section>
   </main>
   <footer><p>© Kunta Naturals. Simple natural rituals for real life.</p></footer>
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const product = params.get('product') || 'selected product';
-    document.getElementById('checkoutTitle').textContent = 'Checkout for ' + product.replaceAll('-', ' ');
-  </script>
+  <script src="checkout.js"></script>
 </body>
 </html>
