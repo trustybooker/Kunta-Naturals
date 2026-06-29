@@ -1,12 +1,13 @@
 {
   "brand": "Kunta Naturals",
   "domain": "https://kuntanaturals.com",
-  "email_capture_url": "TODO_ADD_EMAIL_CAPTURE_OR_FORM_ENDPOINT",
+  "email_capture_status": "pending_provider",
+  "email_capture_url": "",
   "payment_provider": "pending",
   "recommended_payment_providers": ["Gumroad", "Payhip", "Stripe Payment Links", "Shopify"],
   "checkout_mode": "external_provider_required",
   "download_delivery_mode": "provider_delivered_for_paid_products",
   "free_download_url": "downloads/free-3-minute-guide.html",
-  "support_email": "TODO_ADD_SUPPORT_EMAIL",
+  "support_email": "",
   "notes": "Do not put paid PDFs or secret payment keys in this public GitHub Pages repo. Use Gumroad, Payhip, Shopify, or the Kunta OS v2 backend for protected paid delivery."
 }
