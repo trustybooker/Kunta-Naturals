@@ -1,11 +1,11 @@
 import crypto from 'node:crypto';
 
 function getSecret() {
-  const configuredSecret = process.env.DELIVERY_TOKEN_SECRET || process.env.STRIPE_WEBHOOK_SECRET;
-  if (configuredSecret) return configuredSecret;
+  const deliverySecret = process.env.DELIVERY_TOKEN_SECRET;
+  if (deliverySecret) return deliverySecret;
 
   if (process.env.NODE_ENV !== 'production') {
-    return 'dev-only-delivery-secret-change-me';
+    return process.env.STRIPE_WEBHOOK_SECRET || 'dev-only-delivery-secret-change-me';
   }
 
   throw new Error('DELIVERY_TOKEN_SECRET is required in production.');
