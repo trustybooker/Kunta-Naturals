@@ -55,10 +55,9 @@ async function sendEmail(to: string, subject: string, html: string) {
   return { sent: true };
 }
 
-function customerEmailHtml(name: string) {
+function customerEmailHtml() {
   const site = publicSiteUrl();
-  const greeting = name ? `Hi ${name},` : 'Hi,';
-  return `<div style="font-family:Arial,sans-serif;line-height:1.55;color:#2e2119;max-width:620px;margin:0 auto;padding:24px;"><h1 style="font-family:Georgia,serif;">Kunta Naturals</h1><p>${greeting}</p><p>Here are your free starter products. Use them to build a simple routine before buying more products.</p><ul><li><a href="${site}/downloads/free-3-minute-guide.html">3-Minute Natural Self-Care Guide</a></li><li><a href="${site}/downloads/starter-checklist.html">Natural Body-Care Starter Checklist</a></li><li><a href="${site}/downloads/5-day-natural-ritual-course.html">5-Day Natural Ritual Course</a></li></ul><p><a href="${site}/free-products.html">Open all free products</a></p><p style="font-size:13px;color:#536b45;">General self-care education only. No medical advice, cure claims, or guaranteed outcomes.</p></div>`;
+  return `<div style="font-family:Arial,sans-serif;line-height:1.55;color:#2e2119;max-width:620px;margin:0 auto;padding:24px;"><h1 style="font-family:Georgia,serif;">Kunta Naturals</h1><p>Hi,</p><p>Here are your free starter products. Use them to build a simple routine before buying more products.</p><ul><li><a href="${site}/downloads/free-3-minute-guide.html">3-Minute Natural Self-Care Guide</a></li><li><a href="${site}/downloads/starter-checklist.html">Natural Body-Care Starter Checklist</a></li><li><a href="${site}/downloads/5-day-natural-ritual-course.html">5-Day Natural Ritual Course</a></li></ul><p><a href="${site}/free-products.html">Open all free products</a></p><p style="font-size:13px;color:#536b45;">General self-care education only. No medical advice, cure claims, or guaranteed outcomes.</p></div>`;
 }
 
 export async function OPTIONS(request: Request) {
@@ -103,10 +102,10 @@ export async function POST(request: Request) {
 
   let emailSent = false;
   try {
-    const result = await sendEmail(email, 'Your Kunta Naturals free ritual guide', customerEmailHtml(input.name));
+    const result = await sendEmail(email, 'Your Kunta Naturals free ritual guide', customerEmailHtml());
     emailSent = result.sent;
     const adminEmail = process.env.KUNTA_ADMIN_EMAIL;
-    if (adminEmail) await sendEmail(adminEmail, `New Kunta Naturals lead: ${email}`, `<p>New lead: ${email}</p><p>Source: ${input.source}</p><p>Product: ${input.product}</p>`);
+    if (adminEmail) await sendEmail(adminEmail, 'New Kunta Naturals lead', '<p>A new Kunta Naturals lead was captured in Supabase.</p>');
   } catch {
     emailSent = false;
   }
