@@ -22,6 +22,30 @@ function publicImagePath(product) {
   return src.startsWith('assets/') ? src : src;
 }
 
+function moneyLabel(product) {
+  const price = Number(product.price || 0);
+  return price > 0 ? `$${price.toFixed(2)}` : 'Free';
+}
+
+function actionLabel(product) {
+  if (product.checkout_status === 'free_public') return 'Open free product';
+  if (product.checkout_status === 'pending_supplier') return `${moneyLabel(product)} - supplier pending`;
+  if (product.checkout_status === 'pending_partner') return `${moneyLabel(product)} - partner review pending`;
+  if (product.checkout_status === 'pending_provider') return `${moneyLabel(product)} - checkout pending`;
+  if (Number(product.price || 0) > 0) return `View details - ${moneyLabel(product)}`;
+  return 'Get ritual guide first';
+}
+
+function statusNote(product) {
+  if (product.checkout_status === 'free_public') return 'Free public delivery path.';
+  if (product.checkout_status === 'pending_supplier') return 'Supplier or POD provider must be connected before live purchase.';
+  if (product.checkout_status === 'pending_partner') return 'Partner links must be reviewed before this bundle goes live.';
+  if (product.checkout_status === 'pending_provider') return 'Paid delivery stays pending until secure checkout is connected.';
+  if (product.fulfillment_model?.includes('pod') || product.fulfillment_model?.includes('supplier') || product.fulfillment_model?.includes('partner')) return 'No Kunta Naturals inventory or direct shipping.';
+  if (product.product_type === 'digital') return 'Owned digital product path.';
+  return 'Third-party fulfillment path.';
+}
+
 function productCard(product) {
   const article = document.createElement('article');
   article.className = `public-product-card has-brand ${product.fulfillment_model || ''}`;
@@ -53,27 +77,17 @@ function productCard(product) {
 
   const fulfillment = document.createElement('p');
   fulfillment.className = 'fulfillment-note';
-  fulfillment.textContent = product.fulfillment_model?.includes('pod') || product.fulfillment_model?.includes('supplier') || product.fulfillment_model?.includes('partner')
-    ? 'No Kunta Naturals inventory or shipping.'
-    : product.product_type === 'digital'
-      ? 'Owned digital product path.'
-      : 'Third-party fulfillment path.';
+  fulfillment.textContent = statusNote(product);
 
   const action = document.createElement('a');
-  action.className = 'product-link';
-  const destination = product.detail_url || product.checkout_url || product.affiliate_url || '';
+  action.className = product.checkout_status?.startsWith('pending') ? 'product-link pending-link' : 'product-link';
+  const destination = product.detail_url || product.checkout_url || product.delivery_url || '';
   action.href = destination || '#quiz';
   if (destination.startsWith('http')) {
     action.target = '_blank';
     action.rel = 'sponsored noopener';
   }
-  if (product.product_type === 'digital' && product.price) {
-    action.textContent = `View details - $${Number(product.price).toFixed(2)}`;
-  } else if (product.price) {
-    action.textContent = `View details - $${Number(product.price).toFixed(2)}`;
-  } else {
-    action.textContent = 'Get ritual guide first';
-  }
+  action.textContent = actionLabel(product);
 
   body.append(meta, title, desc, fulfillment, action);
   article.append(brandStrip, media, body);
