@@ -9,7 +9,15 @@ const requestSchema = z.object({
 });
 
 export async function POST(request: Request) {
-  const parsed = requestSchema.safeParse(await request.json());
+  let payload: unknown;
+
+  try {
+    payload = await request.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON request body.' }, { status: 400 });
+  }
+
+  const parsed = requestSchema.safeParse(payload);
 
   if (!parsed.success) {
     return NextResponse.json({ error: 'Invalid checkout request.' }, { status: 400 });
@@ -60,6 +68,10 @@ export async function POST(request: Request) {
       deliveryMode: product.deliveryMode
     }
   });
+
+  if (!session.url) {
+    return NextResponse.json({ error: 'Checkout session did not return a URL.' }, { status: 500 });
+  }
 
   return NextResponse.json({ url: session.url });
 }
