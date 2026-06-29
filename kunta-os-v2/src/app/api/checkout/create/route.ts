@@ -8,36 +8,63 @@ const requestSchema = z.object({
   customerEmail: z.string().email().optional()
 });
 
+function allowedOrigins() {
+  return (process.env.LEAD_ALLOWED_ORIGINS || 'https://kuntanaturals.com,http://localhost:4173')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+}
+
+function corsHeaders(request: Request) {
+  const origin = request.headers.get('origin') || '';
+  const allowed = allowedOrigins();
+  return {
+    'Access-Control-Allow-Origin': allowed.includes(origin) ? origin : allowed[0],
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'content-type',
+    Vary: 'Origin'
+  };
+}
+
+function json(request: Request, body: unknown, status = 200) {
+  return NextResponse.json(body, { status, headers: corsHeaders(request) });
+}
+
+export async function OPTIONS(request: Request) {
+  return new NextResponse(null, { status: 204, headers: corsHeaders(request) });
+}
+
 export async function POST(request: Request) {
   let payload: unknown;
 
   try {
     payload = await request.json();
   } catch {
-    return NextResponse.json({ error: 'Invalid JSON request body.' }, { status: 400 });
+    return json(request, { error: 'Invalid JSON request body.' }, 400);
   }
 
   const parsed = requestSchema.safeParse(payload);
 
   if (!parsed.success) {
-    return NextResponse.json({ error: 'Invalid checkout request.' }, { status: 400 });
+    return json(request, { error: 'Invalid checkout request.' }, 400);
   }
 
   const product = getDigitalProduct(parsed.data.productId);
 
   if (!product) {
-    return NextResponse.json({ error: 'Unknown product.' }, { status: 404 });
+    return json(request, { error: 'Unknown product.' }, 404);
   }
 
   if (product.priceCents <= 0 && product.publicDeliveryPath) {
-    return NextResponse.json({ url: product.publicDeliveryPath, free: true });
+    return json(request, { url: product.publicDeliveryPath, free: true });
   }
 
   const secretKey = process.env.STRIPE_SECRET_KEY;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kuntanaturals.com';
+  const publicSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kuntanaturals.com';
+  const backendUrl = process.env.KUNTA_BACKEND_PUBLIC_URL || publicSiteUrl;
 
   if (!secretKey) {
-    return NextResponse.json({ error: 'Stripe is not configured yet.' }, { status: 501 });
+    return json(request, { error: 'Stripe is not configured yet.' }, 501);
   }
 
   const stripe = new Stripe(secretKey);
@@ -60,8 +87,8 @@ export async function POST(request: Request) {
         }
       }
     ],
-    success_url: `${siteUrl}/delivery/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${siteUrl}/digital-products.html`,
+    success_url: `${backendUrl}/delivery/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${publicSiteUrl}/digital-products.html`,
     metadata: {
       productId: product.id,
       productName: product.name,
@@ -70,8 +97,8 @@ export async function POST(request: Request) {
   });
 
   if (!session.url) {
-    return NextResponse.json({ error: 'Checkout session did not return a URL.' }, { status: 500 });
+    return json(request, { error: 'Checkout session did not return a URL.' }, 500);
   }
 
-  return NextResponse.json({ url: session.url });
+  return json(request, { url: session.url });
 }

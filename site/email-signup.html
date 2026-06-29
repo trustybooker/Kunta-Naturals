@@ -21,16 +21,24 @@
       <div class="hero-copy">
         <p class="eyebrow">Free guide</p>
         <h1>Get the 3-Minute Natural Self-Care Guide.</h1>
-        <p class="lead">Email capture is not connected yet, so the free guide is available directly while the provider endpoint is being added.</p>
+        <p class="lead">Enter your email to receive the free starter guide and product-role checklist. You can also open the free products directly.</p>
+        <form id="leadCaptureForm" class="lead-capture-form">
+          <label>Name <input name="name" type="text" autocomplete="name" placeholder="Your name"></label>
+          <label>Email <input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
+          <label class="hidden-field" aria-hidden="true">Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+          <label class="checkbox-line"><input name="marketingConsent" type="checkbox" required> Send me Kunta Naturals free guides and ritual education. I understand this is general self-care education, not medical advice.</label>
+          <button type="submit">Send my free guide</button>
+        </form>
+        <p id="leadCaptureStatus" class="small" role="status">Free products remain available even before email delivery is connected.</p>
         <div class="actions">
-          <a class="button primary" href="free-products.html">Open free products</a>
-          <a class="button secondary" href="downloads/free-3-minute-guide.html">Open the guide</a>
+          <a class="button secondary" href="free-products.html">Open all free products</a>
+          <a class="button secondary" href="downloads/free-3-minute-guide.html">Open the guide now</a>
         </div>
-        <p class="small">Connect ConvertKit, MailerLite, Beehiiv, Klaviyo, Shopify Email, or another provider before relying on email capture.</p>
       </div>
       <aside class="identity-card"><img class="identity-logo" src="assets/kn-clean-starter.svg" alt="Kunta Naturals free guide cover"></aside>
     </section>
   </main>
   <footer><p>© Kunta Naturals. Simple natural rituals for real life.</p></footer>
+  <script src="lead-capture.js"></script>
 </body>
 </html>
