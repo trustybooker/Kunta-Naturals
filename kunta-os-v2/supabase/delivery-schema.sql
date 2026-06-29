@@ -55,10 +55,13 @@ alter table public.orders enable row level security;
 alter table public.delivery_tokens enable row level security;
 alter table public.download_events enable row level security;
 
-create policy "admin digital products" on public.digital_products for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
-create policy "admin orders" on public.orders for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
-create policy "admin delivery tokens" on public.delivery_tokens for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
-create policy "admin download events" on public.download_events for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+drop policy if exists "admin digital products" on public.digital_products;
+drop policy if exists "admin orders" on public.orders;
+drop policy if exists "admin delivery tokens" on public.delivery_tokens;
+drop policy if exists "admin download events" on public.download_events;
+
+-- No anon/authenticated client policy is created here. The delivery API uses the Supabase service role on the server.
+-- Add a narrower admin policy later only after Kunta OS staff/admin authentication is implemented.
 
 insert into public.digital_products (id, name, product_type, price_cents, delivery_mode, public_delivery_path, protected_file_label, status) values
   ('free-3-minute-guide', '3-Minute Natural Self-Care Guide', 'free', 0, 'public_free_page', '/downloads/free-3-minute-guide.html', null, 'active'),
