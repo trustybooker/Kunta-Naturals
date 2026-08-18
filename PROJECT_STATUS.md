@@ -23,12 +23,13 @@ Last verified: 2026-08-18
 - Live catalog returns nine active products.
 - GitHub and Vercel production checks passed.
 - Production dependency audit reports zero known vulnerabilities.
+- Owner reports the Resend API key was connected to the Vercel project on 2026-08-18.
 
 ## Open launch gates
 
 - Owner must create and confirm Supabase Auth access.
 - Stripe must be connected and tested before any product is marked `live`.
-- Resend must be connected and its sending domain verified before transactional or marketing email is enabled.
+- Resend sending must pass a production test from the verified sending domain before transactional or marketing email is enabled.
 - Paid product files must be uploaded to the private `digital-products` bucket and tested before checkout activation.
 
 ## Safety rule
