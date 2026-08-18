@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createSupabaseAdminClient } from '@/lib/supabase/admin-client';
+import { sendLesson } from '@/lib/email-system';
 
 const schema = z.object({
   email: z.string().email().max(254),
@@ -38,37 +39,6 @@ function publicSiteUrl() {
   return process.env.NEXT_PUBLIC_SITE_URL || 'https://kuntanaturals.com';
 }
 
-async function sendEmail(to: string, subject: string, html: string) {
-  const apiKey = process.env.RESEND_API_KEY;
-  const configuredFrom = process.env.RESEND_FROM_EMAIL || 'Kunta Naturals <hello@send.kuntanaturals.com>';
-  const from = configuredFrom.replace('@kuntanaturals.com', '@send.kuntanaturals.com');
-  if (!apiKey) {
-    console.error('Resend email is unavailable because RESEND_API_KEY is missing.');
-    return { sent: false };
-  }
-
-  const response = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: 'Bearer ' + apiKey,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ from, to: [to], subject, html })
-  });
-
-  if (!response.ok) {
-    const details = await response.text();
-    console.error('Resend email failed.', { status: response.status, details });
-    throw new Error('Resend email failed.');
-  }
-  return { sent: true };
-}
-
-function customerEmailHtml() {
-  const site = publicSiteUrl();
-  return `<div style="font-family:Arial,sans-serif;line-height:1.55;color:#2e2119;max-width:620px;margin:0 auto;padding:24px;"><h1 style="font-family:Georgia,serif;">Kunta Naturals</h1><p>Hi,</p><p>Here are your free starter products. Use them to build a simple routine before buying more products.</p><ul><li><a href="${site}/downloads/free-3-minute-guide.html">3-Minute Natural Self-Care Guide</a></li><li><a href="${site}/downloads/starter-checklist.html">Natural Body-Care Starter Checklist</a></li><li><a href="${site}/downloads/5-day-natural-ritual-course.html">5-Day Natural Ritual Course</a></li></ul><p><a href="${site}/free-products.html">Open all free products</a></p><p style="font-size:13px;color:#536b45;">General self-care education only. No medical advice, cure claims, or guaranteed outcomes.</p></div>`;
-}
-
 export async function OPTIONS(request: Request) {
   return new NextResponse(null, { status: 204, headers: headers(request) });
 }
@@ -94,9 +64,10 @@ export async function POST(request: Request) {
 
   const email = input.email.trim().toLowerCase();
 
+  const supabase = createSupabaseAdminClient();
+  let leadId = '';
   try {
-    const supabase = createSupabaseAdminClient();
-    const { error } = await supabase.from('email_leads').upsert(
+    const { data, error } = await supabase.from('email_leads').upsert(
       {
         email,
         email_lower: email,
@@ -104,21 +75,27 @@ export async function POST(request: Request) {
         product: input.product,
         source: input.source,
         marketing_consent: input.marketingConsent,
+        unsubscribed_at: null,
+        sequence_status: 'active',
+        sequence_day: 0,
+        next_email_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       },
       { onConflict: 'email_lower' }
-    );
+    ).select('id').single();
     if (error) throw error;
+    leadId = data.id;
   } catch {
     return reply(request, { error: 'Lead capture storage is not configured yet.' }, 501);
   }
 
   let emailSent = false;
   try {
-    const result = await sendEmail(email, 'Your Kunta Naturals free ritual guide', customerEmailHtml());
-    emailSent = result.sent;
-    const adminEmail = process.env.KUNTA_ADMIN_EMAIL;
-    if (adminEmail) await sendEmail(adminEmail, 'New Kunta Naturals lead', '<p>A new Kunta Naturals lead was captured in Supabase.</p>');
+    const result = await sendLesson(email, 1, leadId);
+    emailSent = true;
+    const now = new Date().toISOString();
+    await supabase.from('email_events').insert({ lead_id: leadId, provider_email_id: result.id, event_type: 'email.sent', sequence_day: 1 });
+    await supabase.from('email_leads').update({ sequence_day: 1, last_email_at: now, next_email_at: new Date(Date.now() + 86400000).toISOString() }).eq('id', leadId);
   } catch (error) {
     console.error('Kunta Naturals lead email was not sent.', error);
     emailSent = false;
