@@ -40,8 +40,11 @@ function publicSiteUrl() {
 
 async function sendEmail(to: string, subject: string, html: string) {
   const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.RESEND_FROM_EMAIL;
-  if (!apiKey || !from) return { sent: false };
+  const from = process.env.RESEND_FROM_EMAIL || 'Kunta Naturals <hello@kuntanaturals.com>';
+  if (!apiKey) {
+    console.error('Resend email is unavailable because RESEND_API_KEY is missing.');
+    return { sent: false };
+  }
 
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -52,7 +55,11 @@ async function sendEmail(to: string, subject: string, html: string) {
     body: JSON.stringify({ from, to: [to], subject, html })
   });
 
-  if (!response.ok) throw new Error('Resend email failed.');
+  if (!response.ok) {
+    const details = await response.text();
+    console.error('Resend email failed.', { status: response.status, details });
+    throw new Error('Resend email failed.');
+  }
   return { sent: true };
 }
 
@@ -111,7 +118,8 @@ export async function POST(request: Request) {
     emailSent = result.sent;
     const adminEmail = process.env.KUNTA_ADMIN_EMAIL;
     if (adminEmail) await sendEmail(adminEmail, 'New Kunta Naturals lead', '<p>A new Kunta Naturals lead was captured in Supabase.</p>');
-  } catch {
+  } catch (error) {
+    console.error('Kunta Naturals lead email was not sent.', error);
     emailSent = false;
   }
 
