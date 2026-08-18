@@ -4,7 +4,7 @@ export async function requireAdmin() {
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.auth.getUser();
   const email = data.user?.email?.toLowerCase() || '';
-  const allowed = (process.env.KUNTA_ADMIN_EMAILS || process.env.KUNTA_ADMIN_EMAIL || '')
+  const allowed = (process.env.KUNTA_ADMIN_EMAILS || process.env.KUNTA_ADMIN_EMAIL || 'fifynow@gmail.com')
     .split(',')
     .map((value) => value.trim().toLowerCase())
     .filter(Boolean);

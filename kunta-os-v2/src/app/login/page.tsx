@@ -6,7 +6,7 @@ export default function LoginPage() {
       <section className="card" style={{ maxWidth: 640 }}>
         <p className="eyebrow">Secure admin</p>
         <h1>Login</h1>
-        <p>Manage products, content, approvals, files, leads, orders, and analytics from one protected workspace.</p>
+        <p>Manage products, content, approvals, files, leads, orders, and analytics from one protected workspace. First-time setup is restricted to fifynow@gmail.com.</p>
         <LoginForm />
       </section>
     </main>
