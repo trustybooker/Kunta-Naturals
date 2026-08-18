@@ -28,6 +28,10 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Payment is not complete.' }, { status: 402 });
   }
 
+  if (session.metadata?.brandNamespace !== 'kunta-naturals') {
+    return NextResponse.json({ error: 'This checkout does not belong to Kunta Naturals.' }, { status: 403, headers: { 'Cache-Control': 'no-store' } });
+  }
+
   const productId = session.metadata?.productId;
   if (!productId) {
     return NextResponse.json({ error: 'Missing product metadata.' }, { status: 400 });
