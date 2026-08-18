@@ -11,19 +11,30 @@ const allowedFiles = new Map([
   ['ritual-vault.zip', 'application/zip']
 ]);
 
-function authorized(request: Request) {
+function authorized(supplied: string) {
   const expected = process.env.DELIVERY_BOOTSTRAP_TOKEN || '';
-  const supplied = request.headers.get('authorization')?.replace(/^Bearer\s+/i, '') || '';
   if (!expected || expected.length !== supplied.length) return false;
   return timingSafeEqual(Buffer.from(expected), Buffer.from(supplied));
 }
 
+export async function GET() {
+  return new Response(`<!doctype html><html><head><meta charset="utf-8"><title>Kunta delivery bootstrap</title></head><body><main><h1>Private delivery upload</h1><form method="post" enctype="multipart/form-data"><label>Token <input name="token" type="password" required></label><label>File <input name="file" type="file" required></label><button type="submit">Upload</button></form></main></body></html>`, {
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-store',
+      'Content-Security-Policy': "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"
+    }
+  });
+}
+
 export async function POST(request: Request) {
-  if (!authorized(request)) {
+  const form = await request.formData();
+  const token = String(form.get('token') || '');
+  if (!authorized(token)) {
     return NextResponse.json({ error: 'Unauthorized.' }, { status: 401, headers: { 'Cache-Control': 'no-store' } });
   }
 
-  const file = (await request.formData()).get('file');
+  const file = form.get('file');
   if (!(file instanceof File) || !allowedFiles.has(file.name) || file.size > 10 * 1024 * 1024) {
     return NextResponse.json({ error: 'Invalid delivery file.' }, { status: 400, headers: { 'Cache-Control': 'no-store' } });
   }
