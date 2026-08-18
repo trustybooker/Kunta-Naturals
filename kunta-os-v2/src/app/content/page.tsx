@@ -1,7 +1,10 @@
 import { AppHeader } from '@/components/app-header';
 import { ContentManager } from '@/components/content-manager';
+import { redirect } from 'next/navigation';
+import { requireAdmin } from '@/lib/admin-auth';
 
-export default function ContentPage() {
+export default async function ContentPage() {
+  if (!await requireAdmin()) redirect('/login');
   return (
     <main className="shell">
       <AppHeader />
