@@ -64,6 +64,9 @@ export function ProductManager() {
       {products.map((product) => <article className="card product-row" key={product.id}>
         <div className="row-between"><span className="badge">{product.status}</span><strong>${Number(product.price).toFixed(2)}</strong></div>
         <h2>{product.name}</h2><p>{product.short_description}</p><p><strong>{product.product_type}</strong> · {product.checkout_status}</p>
+        <p className={product.checkout_status === 'free_public' || product.checkout_status === 'live' ? 'readiness ready' : 'readiness waiting'}>
+          {product.checkout_status === 'free_public' ? 'Ready now · free delivery verified' : product.checkout_status === 'live' ? 'Live · monitor checkout and delivery' : 'Early access only · payment remains disabled'}
+        </p>
         <button type="button" className="button-secondary" onClick={() => { setCurrent(product); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Edit</button>
       </article>)}
     </section>
