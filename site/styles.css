@@ -276,6 +276,30 @@ h2 {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.offer-grid article {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.offer-grid article::before {
+  content: "";
+  width: calc(100% + 2.5rem);
+  aspect-ratio: 16 / 10;
+  margin: -1.25rem -1.25rem 1.1rem;
+  border-bottom: 1px solid var(--sand);
+  background-color: var(--cream);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.offer-grid article:nth-child(1)::before { background-image: url('assets/kn-visual-starter.svg'); }
+.offer-grid article:nth-child(2)::before { background-image: url('assets/kn-product-guide-7-day.svg'); }
+.offer-grid article:nth-child(3)::before { background-image: url('assets/kn-product-glow-scent-bundle.svg'); }
+.offer-grid article:nth-child(4)::before { background-image: url('assets/kn-product-vault.svg'); }
+.offer-grid article > a { margin-top: auto; }
+
 .public-product-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -381,6 +405,46 @@ label {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+.email-card::before {
+  content: "";
+  display: block;
+  width: min(190px, 48vw);
+  aspect-ratio: 4 / 3;
+  margin: -0.4rem auto 1rem;
+  background: url('assets/kn-product-email-course.svg') center / contain no-repeat;
+}
+
+.faq-grid article::before,
+.store-section .cards article:not(:has(.icon))::before {
+  display: inline-grid;
+  place-items: center;
+  width: 2.65rem;
+  height: 2.65rem;
+  margin-bottom: 0.9rem;
+  border-radius: 0.85rem;
+  background: rgba(83, 107, 69, 0.12);
+  color: var(--green);
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.faq-grid article::before { content: "?"; }
+.store-section .cards article:nth-child(1):not(:has(.icon))::before { content: "✓"; }
+.store-section .cards article:nth-child(2):not(:has(.icon))::before { content: "↔"; }
+.store-section .cards article:nth-child(3):not(:has(.icon))::before { content: "→"; }
+
+.ritual-board:not(:has(img))::before {
+  content: "";
+  display: block;
+  width: 3.25rem;
+  height: 3.25rem;
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+  background: var(--brown) url('assets/logo-mark.svg') center / cover no-repeat;
+  box-shadow: var(--shadow-sm);
 }
 
 .disclosure, .small {
