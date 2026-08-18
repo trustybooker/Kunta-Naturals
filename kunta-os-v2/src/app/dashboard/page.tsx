@@ -23,7 +23,7 @@ export default async function DashboardPage() {
     <section className="grid dashboard-grid">{stats.map(([value, label]) => <article className="card" key={String(label)}><span className="stat">{value}</span><p>{label}</p></article>)}</section>
     <section className="grid two-grid" style={{ marginTop: '1rem' }}>
       <article className="card"><p className="eyebrow">Next action</p><h2>{review.count ? `${review.count} item${review.count === 1 ? '' : 's'} awaiting review` : 'No content waiting for review'}</h2><p>Review claims, links, visuals, pricing, and brand fit before anything becomes public.</p><Link className="button inline-button" href="/approvals">Open approval checklist</Link></article>
-      <article className="card"><p className="eyebrow">Operating path</p><h2>Manage without editing code</h2><p>Products feed the public catalog. Content stays private until the owner deliberately approves it.</p><div className="quick-links"><Link href="/products">Manage products</Link><Link href="/content">Manage content</Link><Link href="/analytics">View analytics</Link></div></article>
+      <article className="card"><p className="eyebrow">Operating path</p><h2>Manage without editing code</h2><p>Products feed the public catalog. Content stays private until the owner deliberately approves it.</p><div className="quick-links"><Link href="/playbook">Open business playbook</Link><Link href="/products">Manage products</Link><Link href="/content">Manage content</Link><Link href="/analytics">View analytics</Link></div></article>
     </section>
   </main>;
 }
