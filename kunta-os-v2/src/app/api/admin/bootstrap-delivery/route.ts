@@ -12,7 +12,7 @@ const allowedFiles = new Map([
 ]);
 
 function authorized(supplied: string) {
-  const expected = process.env.DELIVERY_BOOTSTRAP_TOKEN || '';
+  const expected = process.env.DELIVERY_BOOTSTRAP_TOKEN_2 || process.env.DELIVERY_BOOTSTRAP_TOKEN || '';
   if (!expected || expected.length !== supplied.length) return false;
   return timingSafeEqual(Buffer.from(expected), Buffer.from(supplied));
 }
