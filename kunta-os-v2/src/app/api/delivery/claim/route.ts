@@ -17,7 +17,12 @@ export async function GET(request: Request) {
   }
 
   const stripe = new Stripe(secretKey);
-  const session = await stripe.checkout.sessions.retrieve(sessionId);
+  let session: Stripe.Checkout.Session;
+  try {
+    session = await stripe.checkout.sessions.retrieve(sessionId);
+  } catch {
+    return NextResponse.json({ error: 'Checkout session could not be verified.' }, { status: 404, headers: { 'Cache-Control': 'no-store' } });
+  }
 
   if (session.payment_status !== 'paid') {
     return NextResponse.json({ error: 'Payment is not complete.' }, { status: 402 });
@@ -55,19 +60,23 @@ export async function GET(request: Request) {
   const token = createDeliveryToken(session.id, productId);
   const tokenHash = hashDeliveryToken(token);
 
-  await supabase.from('delivery_tokens').upsert(
+  const { error: tokenError } = await supabase.from('delivery_tokens').upsert(
     {
       order_id: order.id,
       product_id: productId,
       token_hash: tokenHash,
       customer_email: customerEmail
     },
-    { onConflict: 'token_hash' }
+    { onConflict: 'order_id,product_id' }
   );
+
+  if (tokenError) {
+    return NextResponse.json({ error: 'Could not prepare secure delivery.' }, { status: 500, headers: { 'Cache-Control': 'no-store' } });
+  }
 
   return NextResponse.json({
     productId,
     deliveryUrl: `/api/delivery/download?token=${encodeURIComponent(token)}`,
     accessPage: `/delivery/access?token=${encodeURIComponent(token)}`
-  });
+  }, { headers: { 'Cache-Control': 'no-store' } });
 }

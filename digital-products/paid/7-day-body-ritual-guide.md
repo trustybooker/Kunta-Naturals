@@ -138,3 +138,60 @@ If you are starting from zero:
 ## Upgrade path
 
 After completing this guide, the next best step is the Natural Glow + Scent Ritual Bundle.
+
+## Before-you-start inventory
+
+List what you already own before shopping.
+
+| Role | What I own | Used this month? | Keep, finish, or remove |
+|---|---|---|---|
+| Cleanse | | | |
+| Polish | | | |
+| Moisturize | | | |
+| Scent | | | |
+| Reset | | | |
+
+Your no-buy rule for this week:
+
+## Comfort and safety check
+
+- Follow the directions and warnings on every product label.
+- Patch testing may be appropriate for a new topical product; follow the maker's instructions.
+- Do not use a tool or product on broken or irritated skin.
+- Stop using anything that causes discomfort and seek qualified medical advice when needed.
+- Keep shared tools clean, dry, and personal where appropriate.
+- This guide organizes a routine; it does not diagnose or treat a condition.
+
+## The five-minute version
+
+Use this on busy days:
+
+1. Cleanse with the product already chosen for the week.
+2. Skip optional steps rather than rushing or scrubbing harder.
+3. Use one comfortable moisture step.
+4. Put each item back in its assigned place.
+
+## End-of-week scorecard
+
+Score each statement from 1 (not true) to 5 (very true).
+
+- I knew which product to use.
+- The routine fit the time I had.
+- I used what I already owned.
+- My shelf felt easier to understand.
+- I avoided impulse purchases.
+- I can describe my routine in one sentence.
+
+If your total is below 18, remove a step before adding a product. If it is 18 or higher, repeat the same ritual for another week before changing it.
+
+## My locked ritual
+
+When I do it:
+
+How long it takes:
+
+My five roles:
+
+What I will not buy this month:
+
+The one improvement I will test next:

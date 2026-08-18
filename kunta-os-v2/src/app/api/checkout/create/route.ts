@@ -22,7 +22,8 @@ function corsHeaders(request: Request) {
     'Access-Control-Allow-Origin': allowed.includes(origin) ? origin : allowed[0],
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'content-type',
-    Vary: 'Origin'
+    Vary: 'Origin',
+    'Cache-Control': 'no-store'
   };
 }
 
@@ -35,6 +36,10 @@ export async function OPTIONS(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const origin = request.headers.get('origin');
+  if (origin && !allowedOrigins().includes(origin)) {
+    return json(request, { error: 'Origin is not allowed.' }, 403);
+  }
   let payload: unknown;
 
   try {
@@ -68,7 +73,9 @@ export async function POST(request: Request) {
   }
 
   const stripe = new Stripe(secretKey);
-  const session = await stripe.checkout.sessions.create({
+  let session: Stripe.Checkout.Session;
+  try {
+    session = await stripe.checkout.sessions.create({
     mode: 'payment',
     customer_email: parsed.data.customerEmail,
     line_items: [
@@ -94,7 +101,10 @@ export async function POST(request: Request) {
       productName: product.name,
       deliveryMode: product.deliveryMode
     }
-  });
+    });
+  } catch {
+    return json(request, { error: 'Secure checkout is temporarily unavailable.' }, 503);
+  }
 
   if (!session.url) {
     return json(request, { error: 'Checkout session did not return a URL.' }, 500);

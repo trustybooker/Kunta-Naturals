@@ -40,6 +40,9 @@ create table if not exists public.delivery_tokens (
   created_at timestamptz not null default now()
 );
 
+create unique index if not exists delivery_tokens_one_per_order_product
+  on public.delivery_tokens(order_id, product_id);
+
 create table if not exists public.download_events (
   id uuid primary key default gen_random_uuid(),
   delivery_token_id uuid references public.delivery_tokens(id) on delete set null,
@@ -49,6 +52,11 @@ create table if not exists public.download_events (
   user_agent text,
   created_at timestamptz not null default now()
 );
+
+create index if not exists orders_product_id_idx on public.orders(product_id);
+create index if not exists delivery_tokens_product_id_idx on public.delivery_tokens(product_id);
+create index if not exists download_events_delivery_token_id_idx on public.download_events(delivery_token_id);
+create index if not exists download_events_product_id_idx on public.download_events(product_id);
 
 alter table public.digital_products enable row level security;
 alter table public.orders enable row level security;

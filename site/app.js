@@ -15,6 +15,8 @@ quiz?.addEventListener('submit', (event) => {
   const selected = new FormData(quiz).get('ritual');
   result.style.display = 'block';
   result.textContent = selected ? recommendations[selected] : 'Choose one answer to reveal your ritual type.';
+  result.setAttribute('tabindex', '-1');
+  result.focus();
 });
 
 function publicImagePath(product) {
@@ -29,18 +31,18 @@ function moneyLabel(product) {
 
 function actionLabel(product) {
   if (product.checkout_status === 'free_public') return 'Open free product';
-  if (product.checkout_status === 'pending_supplier') return `${moneyLabel(product)} - supplier pending`;
-  if (product.checkout_status === 'pending_partner') return `${moneyLabel(product)} - partner review pending`;
-  if (product.checkout_status === 'pending_provider') return `${moneyLabel(product)} - checkout pending`;
+  if (product.checkout_status === 'pending_supplier') return 'Join the product waitlist';
+  if (product.checkout_status === 'pending_partner') return 'Join the bundle waitlist';
+  if (product.checkout_status === 'pending_provider') return `Get launch access · ${moneyLabel(product)}`;
   if (Number(product.price || 0) > 0) return `View details - ${moneyLabel(product)}`;
   return 'Get ritual guide first';
 }
 
 function statusNote(product) {
   if (product.checkout_status === 'free_public') return 'Free public delivery path.';
-  if (product.checkout_status === 'pending_supplier') return 'Supplier or POD provider must be connected before live purchase.';
-  if (product.checkout_status === 'pending_partner') return 'Partner links must be reviewed before this bundle goes live.';
-  if (product.checkout_status === 'pending_provider') return 'Paid delivery stays pending until secure checkout is connected.';
+  if (product.checkout_status === 'pending_supplier') return 'In development · no payment taken.';
+  if (product.checkout_status === 'pending_partner') return 'In development · no payment taken.';
+  if (product.checkout_status === 'pending_provider') return 'Launching soon with secure delivery · no payment taken today.';
   if (product.fulfillment_model?.includes('pod') || product.fulfillment_model?.includes('supplier') || product.fulfillment_model?.includes('partner')) return 'No Kunta Naturals inventory or direct shipping.';
   if (product.product_type === 'digital') return 'Owned digital product path.';
   return 'Third-party fulfillment path.';
@@ -81,7 +83,10 @@ function productCard(product) {
 
   const action = document.createElement('a');
   action.className = product.checkout_status?.startsWith('pending') ? 'product-link pending-link' : 'product-link';
-  const destination = product.detail_url || product.checkout_url || product.delivery_url || product.affiliate_url || '';
+  const isPending = product.checkout_status?.startsWith('pending');
+  const destination = isPending
+    ? `email-signup.html?interest=${encodeURIComponent(normalizeProductSlug(product))}`
+    : product.detail_url || product.checkout_url || product.delivery_url || product.affiliate_url || '';
   action.href = destination || '#quiz';
   if (destination.startsWith('http')) {
     action.target = '_blank';
@@ -94,12 +99,33 @@ function productCard(product) {
   return article;
 }
 
+function normalizeProductSlug(product) {
+  return String(product.id || product.name || 'product')
+    .replace(/^kn-/, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, '-');
+}
+
 async function loadPublicProducts() {
   if (!productGrid) return;
   try {
-    const response = await fetch('data/products.json', { cache: 'no-store' });
-    const products = await response.json();
-    const visible = products.filter((product) => product.status === 'active');
+    let products;
+    try {
+      const configResponse = await fetch('data/site-config.json', { cache: 'no-store' });
+      const config = await configResponse.json();
+      if (!config.backend_api_base_url) throw new Error('Backend not configured');
+      const liveResponse = await fetch(`${config.backend_api_base_url}/api/catalog`, { signal: AbortSignal.timeout(4500) });
+      if (!liveResponse.ok) throw new Error('Live catalog unavailable');
+      products = await liveResponse.json();
+    } catch {
+      const fallbackResponse = await fetch('data/products.json', { cache: 'no-store' });
+      if (!fallbackResponse.ok) throw new Error('Fallback catalog unavailable');
+      products = await fallbackResponse.json();
+    }
+    const visible = products.filter((product) =>
+      product.status === 'active' &&
+      product.product_type === 'digital'
+    );
     productGrid.replaceChildren();
     if (!visible.length) {
       const empty = document.createElement('article');
@@ -110,7 +136,7 @@ async function loadPublicProducts() {
     }
     visible.forEach((product) => productGrid.appendChild(productCard(product)));
   } catch {
-    productGrid.textContent = 'Product picks are being prepared.';
+    productGrid.innerHTML = '<article class="public-product-card empty-card"><div><p class="product-meta">Catalog unavailable</p><h3>The product list could not load.</h3><p>You can still open the free ritual products now.</p><a class="product-link" href="free-products.html">Open free products</a></div></article>';
   }
 }
 

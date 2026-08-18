@@ -1,11 +1,6 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import crypto from 'node:crypto';
 import { createSupabaseAdminClient } from '@/lib/supabase/admin-client';
-
-function hashToken(token: string) {
-  return crypto.createHash('sha256').update(token).digest('hex');
-}
 
 export async function POST(request: Request) {
   const secretKey = process.env.STRIPE_SECRET_KEY;
@@ -65,16 +60,6 @@ export async function POST(request: Request) {
   if (orderError || !order) {
     return NextResponse.json({ error: 'Could not save order.' }, { status: 500 });
   }
-
-  const token = crypto.randomBytes(32).toString('base64url');
-  const tokenHash = hashToken(token);
-
-  await supabase.from('delivery_tokens').insert({
-    order_id: order.id,
-    product_id: productId,
-    token_hash: tokenHash,
-    customer_email: customerEmail
-  });
 
   return NextResponse.json({ received: true });
 }

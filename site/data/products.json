@@ -119,7 +119,7 @@
     "price": 47,
     "currency": "USD",
     "image_url": "assets/kn-product-vault.svg",
-    "detail_url": "checkout.html?product=ritual-vault",
+    "detail_url": "products/ritual-vault.html",
     "checkout_url": "checkout.html?product=ritual-vault",
     "checkout_status": "pending_provider",
     "tags": ["paid", "vault", "bundle", "owned"],
