@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { createSupabaseAdminClient } from '@/lib/supabase/admin-client';
 
+const STRIPE_BRAND_NAMESPACE = 'kunta-naturals';
+
 export async function POST(request: Request) {
   const secretKey = process.env.STRIPE_SECRET_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -31,6 +33,9 @@ export async function POST(request: Request) {
   }
 
   const session = event.data.object as Stripe.Checkout.Session;
+  if (session.metadata?.brandNamespace !== STRIPE_BRAND_NAMESPACE) {
+    return NextResponse.json({ received: true, ignored: true });
+  }
   const productId = session.metadata?.productId;
 
   if (!productId) {
