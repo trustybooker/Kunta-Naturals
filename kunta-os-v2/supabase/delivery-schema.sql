@@ -53,6 +53,11 @@ create table if not exists public.download_events (
   created_at timestamptz not null default now()
 );
 
+create index if not exists orders_product_id_idx on public.orders(product_id);
+create index if not exists delivery_tokens_product_id_idx on public.delivery_tokens(product_id);
+create index if not exists download_events_delivery_token_id_idx on public.download_events(delivery_token_id);
+create index if not exists download_events_product_id_idx on public.download_events(product_id);
+
 alter table public.digital_products enable row level security;
 alter table public.orders enable row level security;
 alter table public.delivery_tokens enable row level security;
