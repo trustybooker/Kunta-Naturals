@@ -9,6 +9,13 @@ Last verified: 2026-08-18
 - Approved owner email: `fifynow@gmail.com`.
 - Never request, store, or transmit the owner's password.
 
+## Integration operating preference
+
+- For Kunta Naturals integrations, use this order by default: direct connector, MCP, Cloud Browser, then an unavoidable manual step only when consent, identity, billing, payment details, or secret creation requires the owner.
+- Automate reversible, non-sensitive setup and verification work whenever an authenticated connector or browser session is available.
+- Never ask the owner to paste passwords, one-time codes, API keys, card details, or other secrets into chat.
+- Pause at the exact point of any consequential authorization or financial action and request confirmation with the target and effect clearly stated.
+
 ## Verified complete
 
 - Production storefront and Vercel backend deployed from `main`.
