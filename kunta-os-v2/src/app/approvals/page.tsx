@@ -1,4 +1,6 @@
 import { AppHeader } from '@/components/app-header';
+import { redirect } from 'next/navigation';
+import { requireAdmin } from '@/lib/admin-auth';
 
 const checks = [
   'Brand fit: Pure. Rooted. Real.',
@@ -11,7 +13,8 @@ const checks = [
   'Price, destination, and product role are clear.'
 ];
 
-export default function ApprovalsPage() {
+export default async function ApprovalsPage() {
+  if (!await requireAdmin()) redirect('/login');
   return (
     <main className="shell">
       <AppHeader />

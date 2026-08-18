@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { requireAdmin } from '@/lib/admin-auth';
 import { createSupabaseAdminClient } from '@/lib/supabase/admin-client';
+import { reviewCopy } from '@/lib/compliance';
 
 const productSchema = z.object({
   id: z.string().min(2).max(100),
@@ -42,8 +43,24 @@ export async function POST(request: Request) {
   if (!context) return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
   const parsed = productSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: 'Product fields are invalid.', fields: parsed.error.flatten().fieldErrors }, { status: 400 });
+  const product = parsed.data;
+  const copyReview = reviewCopy([product.name, product.short_description, product.description].join(' '));
+  if (!copyReview.approved) {
+    return NextResponse.json({ error: 'Remove unsupported claims before saving.', flags: copyReview.flags }, { status: 400 });
+  }
+  if (product.checkout_status === 'live') {
+    const launchGaps = [
+      product.price <= 0 ? 'a paid price' : '',
+      !product.image_url ? 'an approved product image' : '',
+      !product.detail_url ? 'a product detail page' : '',
+      product.fulfillment_model.includes('pending') ? 'verified fulfillment without a pending status' : ''
+    ].filter(Boolean);
+    if (launchGaps.length) {
+      return NextResponse.json({ error: `Live checkout requires ${launchGaps.join(', ')}.` }, { status: 400 });
+    }
+  }
   const now = new Date().toISOString();
-  const { data, error } = await context.supabase.from('catalog_products').upsert({ ...parsed.data, updated_at: now }, { onConflict: 'id' }).select().single();
+  const { data, error } = await context.supabase.from('catalog_products').upsert({ ...product, updated_at: now }, { onConflict: 'id' }).select().single();
   if (error) return NextResponse.json({ error: 'Could not save product.' }, { status: 500 });
   await context.supabase.from('admin_audit_log').insert({ actor_email: context.admin.email, action: 'product_upsert', entity_type: 'catalog_product', entity_id: parsed.data.id });
   return NextResponse.json(data, { headers: { 'Cache-Control': 'no-store' } });

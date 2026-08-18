@@ -1,7 +1,10 @@
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { AppHeader } from '@/components/app-header';
+import { requireAdmin } from '@/lib/admin-auth';
 
-export default function HomePage() {
+export default async function HomePage() {
+  if (!await requireAdmin()) redirect('/login');
   return (
     <main className="shell">
       <AppHeader />

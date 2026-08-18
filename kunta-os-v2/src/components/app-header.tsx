@@ -14,6 +14,7 @@ export function AppHeader() {
         <Link href="/media">Media</Link>
         <Link href="/approvals">Approvals</Link>
         <Link href="/analytics">Analytics</Link>
+        <Link href="/playbook">Playbook</Link>
         <form action="/api/auth/logout" method="post"><button className="link-button" type="submit">Log out</button></form>
       </nav>
     </header>

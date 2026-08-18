@@ -1,7 +1,10 @@
 import { AppHeader } from '@/components/app-header';
 import { AnalyticsDashboard } from '@/components/analytics-dashboard';
+import { redirect } from 'next/navigation';
+import { requireAdmin } from '@/lib/admin-auth';
 
-export default function AnalyticsPage() {
+export default async function AnalyticsPage() {
+  if (!await requireAdmin()) redirect('/login');
   return (
     <main className="shell">
       <AppHeader />

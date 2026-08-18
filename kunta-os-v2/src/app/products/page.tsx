@@ -1,7 +1,10 @@
 import { AppHeader } from '@/components/app-header';
 import { ProductManager } from '@/components/product-manager';
+import { redirect } from 'next/navigation';
+import { requireAdmin } from '@/lib/admin-auth';
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  if (!await requireAdmin()) redirect('/login');
   return (
     <main className="shell">
       <AppHeader />
