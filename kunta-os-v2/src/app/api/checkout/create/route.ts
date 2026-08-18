@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { z } from 'zod';
 import { getDigitalProduct } from '@/lib/digital-products';
+import { createSupabaseAdminClient } from '@/lib/supabase/admin-client';
 
 const requestSchema = z.object({
   productId: z.string().min(1),
@@ -62,6 +63,29 @@ export async function POST(request: Request) {
 
   if (product.priceCents <= 0 && product.publicDeliveryPath) {
     return json(request, { url: product.publicDeliveryPath, free: true });
+  }
+
+  const supabase = createSupabaseAdminClient();
+  const { data: catalogProduct } = await supabase
+    .from('catalog_products')
+    .select('checkout_status')
+    .eq('id', `kn-${product.id}`)
+    .maybeSingle();
+  const { data: deliveryProduct } = await supabase
+    .from('digital_products')
+    .select('protected_storage_path,status')
+    .eq('id', product.id)
+    .maybeSingle();
+  if (catalogProduct?.checkout_status !== 'live' || deliveryProduct?.status !== 'active' || !deliveryProduct.protected_storage_path) {
+    return json(request, { error: 'This product is not ready to accept payment yet.' }, 409);
+  }
+  const pathParts = deliveryProduct.protected_storage_path.split('/');
+  const fileName = pathParts.pop() || '';
+  const folder = pathParts.join('/');
+  const bucket = process.env.SUPABASE_DELIVERY_BUCKET || 'digital-products';
+  const { data: files } = await supabase.storage.from(bucket).list(folder, { search: fileName, limit: 2 });
+  if (!files?.some((file) => file.name === fileName)) {
+    return json(request, { error: 'This product is awaiting its final delivery file.' }, 409);
   }
 
   const secretKey = process.env.STRIPE_SECRET_KEY;
