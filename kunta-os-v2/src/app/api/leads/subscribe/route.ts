@@ -40,7 +40,8 @@ function publicSiteUrl() {
 
 async function sendEmail(to: string, subject: string, html: string) {
   const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.RESEND_FROM_EMAIL || 'Kunta Naturals <hello@send.kuntanaturals.com>';
+  const configuredFrom = process.env.RESEND_FROM_EMAIL || 'Kunta Naturals <hello@send.kuntanaturals.com>';
+  const from = configuredFrom.replace('@kuntanaturals.com', '@send.kuntanaturals.com');
   if (!apiKey) {
     console.error('Resend email is unavailable because RESEND_API_KEY is missing.');
     return { sent: false };
