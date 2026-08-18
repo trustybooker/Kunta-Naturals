@@ -41,6 +41,7 @@ async function setupCheckout() {
   const message = document.getElementById('checkoutMessage');
   const image = document.getElementById('checkoutImage');
   const form = document.getElementById('checkoutForm');
+  const submitButton = form?.querySelector('button[type="submit"]');
 
   let config = {};
   let product = null;
@@ -57,9 +58,14 @@ async function setupCheckout() {
   }
 
   if (product) {
-    title.textContent = `${product.name} checkout`;
+    const pending = product.checkout_status?.startsWith('pending');
+    title.textContent = pending ? `${product.name} launch list` : `${product.name} checkout`;
     message.textContent = `${dollars(product)} — ${product.short_description || 'Kunta Naturals digital product.'}`;
     if (image && product.image_url) image.src = product.image_url;
+    if (pending) {
+      form?.classList.add('launch-mode');
+      if (submitButton) submitButton.textContent = 'Get first access';
+    }
   } else {
     title.textContent = 'Kunta Naturals checkout';
     message.textContent = 'Choose a product from the shop before starting checkout.';
@@ -67,8 +73,10 @@ async function setupCheckout() {
 
   const apiUrl = config.checkout_api_url || '';
 
-  if (!apiUrl) {
-    setCheckoutStatus('Stripe checkout is wired in the codebase but needs the deployed backend API URL and Stripe keys before live payments can run.', 'pending');
+  if (product?.checkout_status?.startsWith('pending')) {
+    setCheckoutStatus('This product is not accepting payments yet. Join the launch list for first access.', 'pending');
+  } else if (!apiUrl) {
+    setCheckoutStatus('Secure checkout is temporarily unavailable. No payment information has been collected.', 'pending');
   }
 
   form?.addEventListener('submit', async (event) => {
@@ -76,6 +84,11 @@ async function setupCheckout() {
 
     if (!product) {
       setCheckoutStatus('Product not found. Return to the shop and choose a product again.', 'error');
+      return;
+    }
+
+    if (product.checkout_status?.startsWith('pending')) {
+      window.location.href = `email-signup.html?interest=${encodeURIComponent(normalizeProductId(product.id))}`;
       return;
     }
 
@@ -99,21 +112,33 @@ async function setupCheckout() {
     }
 
     setCheckoutStatus('Opening secure Stripe checkout...', 'info');
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Opening secure checkout…';
+    }
 
     try {
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 12000);
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal,
         body: JSON.stringify({
           productId: normalizeProductId(product.id),
           customerEmail
         })
       });
+      window.clearTimeout(timeout);
       const result = await response.json().catch(() => ({}));
       if (!response.ok || !result.url) throw new Error(result.error || 'Checkout failed.');
       window.location.href = result.url;
     } catch {
-      setCheckoutStatus('Checkout could not start yet. The provider may still need keys, webhook, or deployment setup.', 'error');
+      setCheckoutStatus('Checkout could not start. Nothing was charged. Please try again later or use the free products.', 'error');
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Continue to secure checkout';
+      }
     }
   });
 }

@@ -174,3 +174,11 @@
 @media (max-width: 900px) {
   .public-product-grid { grid-template-columns: 1fr; }
 }
+
+/* Production commerce states */
+.public-product-card { min-width: 0; }
+.product-link { width: fit-content; max-width: 100%; text-align: center; }
+.pending-link { background: var(--green); color: var(--white); border: 1px solid var(--green); }
+.lead-capture-form input:invalid:not(:placeholder-shown), .checkout-form input:invalid:not(:placeholder-shown) { border-color: #8a2a1f; }
+#leadCaptureStatus, #checkoutStatus { min-height: 1.5em; }
+.checkout-form.launch-mode label { display: none; }

@@ -56,14 +56,48 @@ function localTarget(fromFile, rawValue) {
 
 function validateReferences(relativeFile) {
   const html = read(relativeFile);
+  if (!/<title>[^<]{10,}<\/title>/.test(html)) fail(`${relativeFile} is missing a descriptive title.`);
+  if (!/<meta name="description" content="[^"]{40,}"/.test(html) && !html.includes('noindex')) {
+    fail(`${relativeFile} is missing a useful meta description.`);
+  }
+  if (!/<link rel="canonical" href="https:\/\/kuntanaturals\.com\/[^"]*"/.test(html) && !html.includes('noindex')) {
+    fail(`${relativeFile} is missing a canonical URL.`);
+  }
+
+  for (const match of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    try {
+      JSON.parse(match[1]);
+    } catch {
+      fail(`${relativeFile} contains invalid JSON-LD.`);
+    }
+  }
+
+  const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
+  const duplicateIds = ids.filter((id, index) => ids.indexOf(id) !== index);
+  for (const id of new Set(duplicateIds)) fail(`${relativeFile} contains duplicate id: ${id}`);
+
   const matches = [...html.matchAll(/(?:href|src)="([^"]+)"/g)];
   for (const [, raw] of matches) {
+    if (raw === '#') fail(`${relativeFile} contains a dead # link.`);
+    if (raw.startsWith('#')) {
+      const targetId = raw.slice(1);
+      if (targetId && !ids.includes(targetId)) fail(`${relativeFile} references missing section: ${raw}`);
+      continue;
+    }
     const target = localTarget(relativeFile, raw);
     if (!target) continue;
     const normalized = target === '' ? 'index.html' : target;
     const siteRelative = normalized.startsWith('site/') ? normalized : `site/${normalized}`;
     if (!exists(siteRelative)) {
       fail(`${relativeFile} references missing file: ${raw} -> ${siteRelative}`);
+    }
+
+    const hash = raw.includes('#') ? raw.split('#')[1] : '';
+    if (hash && exists(siteRelative) && siteRelative.endsWith('.html')) {
+      const targetHtml = read(siteRelative);
+      if (!new RegExp(`\\sid=["']${hash}["']`).test(targetHtml)) {
+        fail(`${relativeFile} references missing section ${raw}`);
+      }
     }
   }
 }
@@ -78,6 +112,7 @@ for (const file of htmlFiles) validateReferences(file);
 const index = read('site/index.html');
 if (!index.includes('application/ld+json')) fail('Homepage is missing JSON-LD schema.');
 if (index.includes('before and after') || index.includes('guaranteed results')) fail('Homepage contains unsafe outcome language.');
+if (/checkout pending/i.test(index)) fail('Homepage exposes internal checkout-pending language.');
 
 const products = JSON.parse(read('site/data/products.json'));
 const requiredProductIds = [

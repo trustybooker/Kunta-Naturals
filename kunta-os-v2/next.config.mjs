@@ -2,6 +2,7 @@
 const nextConfig = {
   async redirects() {
     return [
+      { source: '/', destination: 'https://kuntanaturals.com', permanent: false },
       { source: '/free-products.html', destination: 'https://kuntanaturals.com/free-products.html', permanent: false },
       { source: '/digital-products.html', destination: 'https://kuntanaturals.com/digital-products.html', permanent: false },
       { source: '/email-signup.html', destination: 'https://kuntanaturals.com/email-signup.html', permanent: false },

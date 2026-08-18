@@ -424,3 +424,102 @@ footer {
     font-size: clamp(3rem, 14vw, 4.4rem);
   }
 }
+
+/* Production experience layer */
+:root {
+  --ink-soft: #67584e;
+  --focus: #8f5d28;
+  --shadow-sm: 0 10px 30px rgba(46, 33, 25, 0.08);
+  --shadow-lg: 0 28px 90px rgba(46, 33, 25, 0.14);
+}
+
+html { scroll-padding-top: 6.5rem; }
+body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1; background-image: radial-gradient(rgba(46, 33, 25, 0.035) 0.7px, transparent 0.7px); background-size: 9px 9px; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+::selection { background: var(--gold); color: var(--brown); }
+.site-header { z-index: 50; min-height: 74px; }
+nav a { padding: 0.5rem 0.1rem; border-bottom: 2px solid transparent; transition: border-color 160ms ease, color 160ms ease; }
+nav a:hover, nav a[aria-current="page"] { border-color: var(--clay); color: var(--clay); }
+.hero-copy { min-width: 0; }
+.button, button, .offers a, .product-link { justify-content: center; align-items: center; min-height: 48px; transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease; }
+.button:hover, button:hover, .offers a:hover, .product-link:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+button:disabled { cursor: wait; opacity: 0.65; transform: none; }
+section[id] { scroll-margin-top: 6.5rem; }
+article { transition: transform 180ms ease, box-shadow 180ms ease; }
+article:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+label:has(input:checked) { border-color: var(--green); box-shadow: 0 0 0 3px rgba(83, 107, 69, 0.12); }
+footer a { color: var(--white); }
+.trust-row { display: flex; gap: 0.65rem; flex-wrap: wrap; margin-top: 1.2rem; font-family: Arial, sans-serif; font-size: 0.78rem; font-weight: 800; color: var(--green); }
+.trust-row span { padding: 0.45rem 0.7rem; border: 1px solid var(--sand); border-radius: 999px; background: rgba(255, 250, 242, 0.75); }
+.inline-notice { padding: 1rem 1.1rem; border-left: 4px solid var(--gold); border-radius: 0.75rem; background: rgba(201, 151, 74, 0.12); color: var(--brown); font-family: Arial, sans-serif; }
+
+@media (max-width: 900px) {
+  .site-header { align-items: center; padding: 0.75rem 5vw 0; overflow: hidden; }
+  .site-header .brand { flex: 0 0 auto; margin-bottom: 0.75rem; }
+  .site-header nav { width: 100%; flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-width: none; padding: 0 0 0.75rem; }
+  .site-header nav::-webkit-scrollbar { display: none; }
+  .site-header nav a { flex: 0 0 auto; }
+  .hero { padding-top: 3.5rem; gap: 2rem; }
+  section { padding: 3.25rem 5vw; }
+  .actions { display: grid; width: 100%; }
+  .actions .button { width: 100%; }
+}
+
+@media (max-width: 560px) {
+  .site-header { align-items: flex-start; flex-direction: column; }
+  h1 { font-size: clamp(2.65rem, 15vw, 3.8rem); overflow-wrap: anywhere; }
+  h2 { font-size: clamp(2rem, 11vw, 3rem); }
+  .lead { font-size: 1.08rem; }
+  .identity-card, .ritual-board, .email-card { border-radius: 1.3rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+}
+
+/* Ritual Concierge */
+.concierge-launcher {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 80;
+  gap: 0.55rem;
+  padding: 0.8rem 1rem;
+  box-shadow: 0 16px 50px rgba(46, 33, 25, 0.28);
+}
+.concierge-launcher span:first-child { color: var(--gold); font-size: 1.15rem; }
+.concierge-panel {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 5.4rem;
+  z-index: 79;
+  width: min(440px, calc(100vw - 2rem));
+  max-height: min(720px, calc(100vh - 7rem));
+  overflow: auto;
+  padding: 1.35rem;
+  border: 1px solid var(--sand);
+  border-radius: 1.5rem;
+  background: rgba(255, 250, 242, 0.98);
+  box-shadow: 0 28px 100px rgba(46, 33, 25, 0.28);
+  backdrop-filter: blur(18px);
+}
+.concierge-panel[hidden] { display: none; }
+.concierge-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.concierge-head h2 { margin: 0; font-size: clamp(1.75rem, 5vw, 2.4rem); }
+.concierge-head .eyebrow { margin: 0 0 0.4rem; font-size: 0.72rem; }
+.concierge-close { min-width: 44px; width: 44px; min-height: 44px; padding: 0; font-size: 1.6rem; background: var(--cream); color: var(--brown); }
+.concierge-intro { color: var(--ink-soft); font-size: 0.94rem; }
+.concierge-options { display: grid; gap: 0.55rem; }
+.concierge-options button { width: 100%; justify-content: flex-start; text-align: left; border: 1px solid var(--sand); border-radius: 0.85rem; background: var(--white); color: var(--brown); }
+.concierge-options button:hover, .concierge-options button[aria-pressed="true"] { background: var(--green); color: var(--white); }
+.concierge-result { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--sand); }
+.concierge-result:empty { display: none; }
+.concierge-result h3 { margin: 0.25rem 0; font-size: 1.5rem; line-height: 1.05; }
+.concierge-result .button { margin-top: 0.65rem; }
+
+@media (max-width: 560px) {
+  .concierge-launcher { right: 0.75rem; bottom: 0.75rem; }
+  .concierge-panel { right: 0.75rem; bottom: 4.9rem; width: calc(100vw - 1.5rem); max-height: calc(100vh - 6.5rem); }
+  .concierge-open { overflow: hidden; }
+}

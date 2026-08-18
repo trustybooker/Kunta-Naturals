@@ -25,7 +25,8 @@ function headers(request: Request) {
     'Access-Control-Allow-Origin': allowed.includes(origin) ? origin : allowed[0],
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'content-type',
-    Vary: 'Origin'
+    Vary: 'Origin',
+    'Cache-Control': 'no-store'
   };
 }
 
@@ -65,6 +66,10 @@ export async function OPTIONS(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const origin = request.headers.get('origin');
+  if (origin && !origins().includes(origin)) {
+    return reply(request, { error: 'Origin is not allowed.' }, 403);
+  }
   let body: unknown;
   try {
     body = await request.json();

@@ -40,6 +40,9 @@ create table if not exists public.delivery_tokens (
   created_at timestamptz not null default now()
 );
 
+create unique index if not exists delivery_tokens_one_per_order_product
+  on public.delivery_tokens(order_id, product_id);
+
 create table if not exists public.download_events (
   id uuid primary key default gen_random_uuid(),
   delivery_token_id uuid references public.delivery_tokens(id) on delete set null,
