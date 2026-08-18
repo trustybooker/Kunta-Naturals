@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { requireAdmin } from '@/lib/admin-auth';
 import { createSupabaseAdminClient } from '@/lib/supabase/admin-client';
+import { reviewCopy } from '@/lib/compliance';
 
 const contentSchema = z.object({
   id: z.string().uuid().optional(),
@@ -31,6 +32,16 @@ export async function POST(request: Request) {
   if (!ctx) return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
   const parsed = contentSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: 'Content fields are invalid.', fields: parsed.error.flatten().fieldErrors }, { status: 400 });
+  const copyReview = reviewCopy([parsed.data.title, parsed.data.body, parsed.data.call_to_action || ''].join(' '));
+  if (!copyReview.approved) return NextResponse.json({ error: 'Remove unsupported claims before saving.', flags: copyReview.flags }, { status: 400 });
+  if (parsed.data.status === 'published') {
+    const previous = parsed.data.id
+      ? await ctx.supabase.from('content_items').select('status').eq('id', parsed.data.id).maybeSingle()
+      : { data: null };
+    if (previous.data?.status !== 'approved') {
+      return NextResponse.json({ error: 'Content must be saved as Approved before it can be marked Published.' }, { status: 409 });
+    }
+  }
   const payload = { ...parsed.data, call_to_action: parsed.data.call_to_action || null, scheduled_for: parsed.data.scheduled_for || null, updated_at: new Date().toISOString() };
   const query = parsed.data.id
     ? ctx.supabase.from('content_items').update(payload).eq('id', parsed.data.id).select().single()
