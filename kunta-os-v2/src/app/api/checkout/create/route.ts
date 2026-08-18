@@ -9,6 +9,8 @@ const requestSchema = z.object({
   customerEmail: z.string().email().optional()
 });
 
+const STRIPE_BRAND_NAMESPACE = 'kunta-naturals';
+
 function allowedOrigins() {
   return (process.env.LEAD_ALLOWED_ORIGINS || 'https://kuntanaturals.com,http://localhost:4173')
     .split(',')
@@ -111,6 +113,7 @@ export async function POST(request: Request) {
           product_data: {
             name: product.name,
             metadata: {
+              brandNamespace: STRIPE_BRAND_NAMESPACE,
               productId: product.id,
               fulfillment: product.deliveryMode
             }
@@ -121,6 +124,8 @@ export async function POST(request: Request) {
     success_url: `${backendUrl}/delivery/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${publicSiteUrl}/digital-products.html`,
     metadata: {
+      brandNamespace: STRIPE_BRAND_NAMESPACE,
+      storefront: 'kuntanaturals.com',
       productId: product.id,
       productName: product.name,
       deliveryMode: product.deliveryMode
