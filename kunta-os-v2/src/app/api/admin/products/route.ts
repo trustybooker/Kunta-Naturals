@@ -18,6 +18,9 @@ const productSchema = z.object({
   currency: z.string().length(3).default('USD'),
   image_url: z.string().max(500),
   detail_url: z.string().max(500),
+  affiliate_url: z.string().url().max(1000).or(z.literal('')).default(''),
+  vendor_name: z.string().max(120).default(''),
+  affiliate_disclosure: z.string().max(300).default(''),
   checkout_status: z.enum(['free_public', 'pending_provider', 'pending_supplier', 'pending_partner', 'live']),
   fulfillment_model: z.string().max(120),
   tags: z.array(z.string().max(40)).max(20).default([]),
@@ -48,7 +51,14 @@ export async function POST(request: Request) {
   if (!copyReview.approved) {
     return NextResponse.json({ error: 'Remove unsupported claims before saving.', flags: copyReview.flags }, { status: 400 });
   }
-  if (product.checkout_status === 'live') {
+  if (product.product_type === 'affiliate') {
+    const affiliateGaps = [!product.affiliate_url ? 'a valid partner URL' : '', !product.vendor_name ? 'a vendor name' : '', !product.affiliate_disclosure ? 'an affiliate disclosure' : '', !product.image_url ? 'an approved image' : ''].filter(Boolean);
+    if (affiliateGaps.length) return NextResponse.json({ error: `Affiliate products require ${affiliateGaps.join(', ')}.` }, { status: 400 });
+  }
+  if (product.product_type === 'physical' && product.checkout_status === 'live') {
+    return NextResponse.json({ error: 'Direct physical checkout is not enabled because shipping, tax, returns, and supplier fulfillment are not connected. Use Affiliate for partner-fulfilled products or keep this item pending.' }, { status: 409 });
+  }
+  if (product.checkout_status === 'live' && product.product_type !== 'affiliate') {
     const launchGaps = [
       product.price <= 0 ? 'a paid price' : '',
       !product.image_url ? 'an approved product image' : '',

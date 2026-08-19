@@ -6,11 +6,12 @@ type Product = {
   id: string; name: string; slug: string; category: string; ritual_type: string; audience: string;
   product_type: 'digital' | 'physical' | 'bundle' | 'affiliate'; short_description: string; description: string;
   price: number; currency: string; image_url: string; detail_url: string;
+  affiliate_url: string; vendor_name: string; affiliate_disclosure: string;
   checkout_status: 'free_public' | 'pending_provider' | 'pending_supplier' | 'pending_partner' | 'live';
   fulfillment_model: string; tags: string[]; status: 'draft' | 'review' | 'active' | 'archived'; sort_order: number;
 };
 
-const empty: Product = { id: '', name: '', slug: '', category: 'Digital Product', ritual_type: 'Starter Ritual', audience: 'Adults', product_type: 'digital', short_description: '', description: '', price: 0, currency: 'USD', image_url: '', detail_url: '', checkout_status: 'pending_provider', fulfillment_model: 'owned_digital_private_delivery_pending', tags: [], status: 'draft', sort_order: 100 };
+const empty: Product = { id: '', name: '', slug: '', category: 'Digital Product', ritual_type: 'Starter Ritual', audience: 'Adults', product_type: 'digital', short_description: '', description: '', price: 0, currency: 'USD', image_url: '', detail_url: '', affiliate_url: '', vendor_name: '', affiliate_disclosure: '', checkout_status: 'pending_provider', fulfillment_model: 'owned_digital_private_delivery_pending', tags: [], status: 'draft', sort_order: 100 };
 
 function errorMessage(value: unknown, fallback: string) {
   return value instanceof Error ? value.message : fallback;
@@ -28,7 +29,7 @@ export function ProductManager() {
       if (response.status === 401 || response.status === 403) { window.location.href = '/login?next=%2Fproducts'; return; }
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Could not load products.');
-      setProducts(data);
+      setProducts(data.map((product: Product) => ({ ...empty, ...product })));
       setStatus(`${data.length} products loaded.`);
     } catch (error) {
       setStatus(errorMessage(error, 'Could not load products. Check your connection and try again.'));
@@ -47,7 +48,7 @@ export function ProductManager() {
       if (response.status === 401 || response.status === 403) { window.location.href = '/login?next=%2Fproducts'; return; }
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Could not save product.');
-      setCurrent(data);
+      setCurrent({ ...empty, ...data });
       await load();
       setStatus('Saved. Public catalog updates within about one minute when status is Active.');
     } catch (error) {
@@ -70,6 +71,7 @@ export function ProductManager() {
       <label>Full description<textarea className="input" rows={5} value={current.description} onChange={(e) => set('description', e.target.value)} /></label>
       <label>Image URL<input className="input" value={current.image_url} onChange={(e) => set('image_url', e.target.value)} /></label>
       <label>Detail URL<input className="input" value={current.detail_url} onChange={(e) => set('detail_url', e.target.value)} /></label>
+      {current.product_type === 'affiliate' && <><label>Partner / affiliate URL<input className="input" type="url" value={current.affiliate_url} onChange={(e) => set('affiliate_url', e.target.value)} required placeholder="https://partner.example/product" /><small>Visitors are sent directly to this secure partner page. Tracking parameters are preserved.</small></label><label>Vendor name<input className="input" value={current.vendor_name} onChange={(e) => set('vendor_name', e.target.value)} required placeholder="Amazon, Etsy, or approved partner" /></label><label>Affiliate disclosure<textarea className="input" rows={2} value={current.affiliate_disclosure} onChange={(e) => set('affiliate_disclosure', e.target.value)} required placeholder="We may earn a commission at no extra cost to you." /></label></>}
       <div className="two-field"><label>Category<input className="input" value={current.category} onChange={(e) => set('category', e.target.value)} /></label><label>Ritual type<input className="input" value={current.ritual_type} onChange={(e) => set('ritual_type', e.target.value)} /></label></div>
       <label>Checkout status<select className="input" value={current.checkout_status} onChange={(e) => set('checkout_status', e.target.value as Product['checkout_status'])}><option value="free_public">Free public</option><option value="pending_provider">Provider pending</option><option value="pending_supplier">Supplier pending</option><option value="pending_partner">Partner pending</option><option value="live">Live</option></select></label>
       <label>Fulfillment model<input className="input" value={current.fulfillment_model} onChange={(e) => set('fulfillment_model', e.target.value)} required /><small>Describe exactly how the buyer receives the product. Live paid products cannot use a pending fulfillment model.</small></label>
