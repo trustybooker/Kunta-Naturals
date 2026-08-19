@@ -34,7 +34,7 @@ img {
   justify-content: space-between;
   gap: 1rem;
   align-items: center;
-  padding: 0.85rem 6vw;
+  padding: 0.85rem max(6vw, calc((100vw - 1480px) / 2));
   background: rgba(247, 239, 227, 0.95);
   position: sticky;
   top: 0;
@@ -139,10 +139,15 @@ nav a { text-decoration: none; }
 
 .identity-points {
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.65rem;
   margin-top: 1rem;
+}
+
+.identity-points span {
+  flex: 1 1 8.5rem;
+  text-align: center;
 }
 
 .identity-points span,
@@ -207,7 +212,7 @@ h1, h2, h3 { text-wrap: balance; }
 }
 
 section {
-  padding: 4rem 6vw;
+  padding: 4rem max(6vw, calc((100vw - 1480px) / 2));
 }
 
 .problem, .visual-story, .quiz, .offers, .store-section, .email {
@@ -245,7 +250,7 @@ section {
 }
 
 .visual-card.large {
-  grid-row: span 2;
+  grid-row: auto;
 }
 
 .visual-card img {
@@ -478,7 +483,7 @@ label {
 }
 
 footer {
-  padding: 2rem 6vw;
+  padding: 2rem max(6vw, calc((100vw - 1480px) / 2));
   background: var(--brown);
   color: var(--white);
 }
@@ -554,12 +559,14 @@ footer a { color: var(--white); }
   .site-header nav a { flex: 0 0 auto; }
   .hero { padding-top: 3.5rem; gap: 2rem; }
   section { padding: 3.25rem 5vw; }
-  .actions { display: grid; width: 100%; }
+  .actions { display: grid; width: 100%; max-width: 520px; }
   .actions .button { width: 100%; }
 }
 
 @media (max-width: 560px) {
-  .site-header { align-items: flex-start; flex-direction: column; }
+  .site-header { align-items: flex-start; flex-direction: column; position: relative; padding-bottom: 0.75rem; }
+  .site-header nav { flex-wrap: wrap; overflow: visible; gap: 0.3rem; padding-bottom: 0; }
+  .site-header nav a { flex: 1 1 auto; text-align: center; padding: 0.42rem 0.55rem; font-size: 0.82rem; }
   h1 { font-size: clamp(2.65rem, 15vw, 3.8rem); overflow-wrap: anywhere; }
   h2 { font-size: clamp(2rem, 11vw, 3rem); }
   .lead { font-size: 1.08rem; }
