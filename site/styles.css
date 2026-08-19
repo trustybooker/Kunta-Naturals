@@ -113,6 +113,30 @@ nav a { text-decoration: none; }
   border: 1px solid var(--sand);
 }
 
+.hero-lifestyle-card { padding: 0.75rem; }
+
+.hero-lifestyle-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-photo-mark {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0.85rem 0.25rem 0;
+  font-family: Arial, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--green);
+}
+
+.hero-photo-mark img { width: 30px; height: 30px; }
+
 .identity-points {
   position: relative;
   display: grid;
