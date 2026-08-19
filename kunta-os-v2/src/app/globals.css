@@ -96,6 +96,10 @@ tbody tr:hover { background: rgba(232,214,189,.22); }
 .content-toolbar { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
 .content-toolbar label { min-width: 190px; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.scout-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem; margin-top:1rem; }
+.scout-card { display:grid; gap:.75rem; align-content:start; }
+.scout-card > img,.scout-placeholder { width:100%; aspect-ratio:4/3; object-fit:contain; background:var(--cream); border-radius:1rem; }
+.scout-placeholder { display:grid; place-items:center; color:var(--ink-soft); font-weight:800; }
 @media (max-width: 1120px) { .header { align-items: flex-start; flex-direction: column; } .admin-nav { width: 100%; flex-wrap: nowrap; overflow-x: auto; padding-bottom: .35rem; scrollbar-width: thin; } }
 @media (max-width: 1000px) { .dashboard-grid, .two-grid, .workflow { grid-template-columns: 1fr; } }
 @media (max-width: 1100px) { .readiness-grid, .quality-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

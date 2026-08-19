@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
-const protectedPaths = ['/', '/dashboard', '/operations', '/products', '/content', '/media', '/approvals', '/analytics', '/playbook'];
+const protectedPaths = ['/', '/dashboard', '/operations', '/scout', '/products', '/content', '/media', '/approvals', '/analytics', '/playbook'];
 
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });
