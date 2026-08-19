@@ -15,7 +15,7 @@ const contentSchema = z.object({
   campaign: z.string().max(120).optional().default(''),
   content_format: z.enum(['Post', 'Carousel', 'Story', 'Reel', 'Short video', 'Long video', 'Article', 'Email']).default('Post'),
   media_url: z.string().max(1000).nullable().optional(),
-  publication_url: z.string().url().max(1000).nullable().optional(),
+  publication_url: z.string().url().max(1000).or(z.literal('')).nullable().optional(),
   publish_status: z.enum(['not_scheduled', 'scheduled', 'published', 'failed']).default('not_scheduled'),
   published_at: z.string().datetime().nullable().optional()
 });

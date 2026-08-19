@@ -2,16 +2,17 @@
   "brand": "Kunta Naturals",
   "domain": "https://kuntanaturals.com",
   "backend_api_base_url": "https://kunta-naturals-os.vercel.app",
-  "lead_capture_status": "wired_pending_backend_env",
+  "lead_capture_status": "live",
   "lead_capture_api_url": "https://kunta-naturals-os.vercel.app/api/leads/subscribe",
-  "email_capture_status": "wired_pending_backend_env",
+  "email_capture_status": "live",
   "email_capture_url": "https://kunta-naturals-os.vercel.app/api/leads/subscribe",
+  "support_api_url": "https://kunta-naturals-os.vercel.app/api/support",
   "payment_provider": "stripe",
-  "checkout_mode": "stripe_checkout_backend_required",
+  "checkout_mode": "live_stripe_checkout",
   "checkout_api_url": "https://kunta-naturals-os.vercel.app/api/checkout/create",
   "download_delivery_mode": "private_backend_delivery_for_paid_products",
   "free_download_url": "free-products.html",
   "support_email": "",
   "recommended_payment_provider": "Stripe Checkout",
-  "notes": "Backend URLs are connected. Live email, checkout, and paid delivery still require Vercel environment variables, Supabase SQL/storage, Resend domain/API key, and Stripe webhook/secrets. Do not put paid PDFs, ZIPs, Stripe keys, Supabase service keys, Resend keys, or secrets in this public GitHub Pages repo."
+  "notes": "Backend URLs are connected for live lead capture, Stripe checkout, and private paid delivery. Never place paid files or service secrets in this public repository."
 }
