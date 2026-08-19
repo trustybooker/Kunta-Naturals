@@ -14,6 +14,9 @@ create table if not exists public.catalog_products (
   currency text not null default 'USD',
   image_url text not null default '',
   detail_url text not null default '',
+  affiliate_url text not null default '',
+  vendor_name text not null default '',
+  affiliate_disclosure text not null default '',
   checkout_status text not null check (checkout_status in ('free_public', 'pending_provider', 'pending_supplier', 'pending_partner', 'live')),
   fulfillment_model text not null default '',
   tags text[] not null default '{}',
@@ -22,6 +25,9 @@ create table if not exists public.catalog_products (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+alter table public.catalog_products add column if not exists affiliate_url text not null default '';
+alter table public.catalog_products add column if not exists vendor_name text not null default '';
+alter table public.catalog_products add column if not exists affiliate_disclosure text not null default '';
 
 create table if not exists public.analytics_events (
   id bigint generated always as identity primary key,

@@ -30,6 +30,7 @@ function moneyLabel(product) {
 }
 
 function actionLabel(product) {
+  if (product.product_type === 'affiliate' && product.checkout_status === 'live') return 'View at approved partner';
   if (product.checkout_status === 'free_public') return 'Open free product';
   if (product.checkout_status === 'pending_supplier') return 'Join the product waitlist';
   if (product.checkout_status === 'pending_partner') return 'Join the bundle waitlist';
@@ -40,6 +41,7 @@ function actionLabel(product) {
 }
 
 function statusNote(product) {
+  if (product.product_type === 'affiliate') return product.affiliate_disclosure || 'Partner link · Kunta Naturals may earn a commission at no extra cost to you.';
   if (product.checkout_status === 'free_public') return 'Free public delivery path.';
   if (product.checkout_status === 'pending_supplier') return 'In development · no payment taken.';
   if (product.checkout_status === 'pending_partner') return 'In development · no payment taken.';
@@ -88,7 +90,9 @@ function productCard(product) {
   const isPending = product.checkout_status?.startsWith('pending');
   const destination = isPending
     ? `email-signup.html?interest=${encodeURIComponent(normalizeProductSlug(product))}`
-    : product.detail_url || product.checkout_url || product.delivery_url || product.affiliate_url || '';
+    : product.product_type === 'affiliate'
+      ? product.affiliate_url || ''
+      : product.detail_url || product.checkout_url || product.delivery_url || '';
   action.href = destination || '#quiz';
   if (destination.startsWith('http')) {
     action.target = '_blank';
@@ -124,10 +128,7 @@ async function loadPublicProducts() {
       if (!fallbackResponse.ok) throw new Error('Fallback catalog unavailable');
       products = await fallbackResponse.json();
     }
-    const visible = products.filter((product) =>
-      product.status === 'active' &&
-      product.product_type === 'digital'
-    );
+    const visible = products.filter((product) => product.status === 'active');
     productGrid.replaceChildren();
     if (!visible.length) {
       const empty = document.createElement('article');
