@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { AppHeader } from '@/components/app-header';
 
 export default function DeliverySuccessPage() {
   const [message, setMessage] = useState('Confirming your payment...');
@@ -30,12 +29,12 @@ export default function DeliverySuccessPage() {
 
   return (
     <main className="shell">
-      <AppHeader />
+      <header className="header"><a className="logo" href="https://kuntanaturals.com"><img src="/assets/logo-mark.svg" alt="" /><span>Kunta Naturals</span></a></header>
       <section className="card" style={{ padding: '3rem' }}>
         <p className="eyebrow">Payment received</p>
         <h1>Your Kunta Naturals delivery is being prepared.</h1>
         <p>{message}</p>
-        {accessPage ? <a className="button" href={accessPage}>Open secure delivery</a> : null}
+        {accessPage ? <a className="button" href={accessPage}>Open secure delivery</a> : <a className="button button-secondary" href="https://kuntanaturals.com/support.html">Get delivery help</a>}
       </section>
     </main>
   );

@@ -20,6 +20,15 @@ body {
   line-height: 1.6;
 }
 
+.honeypot {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}
+
 p, li, label, input, button, .button, nav, .trust-row, .small, .disclosure { text-wrap: pretty; }
 
 a { color: inherit; }

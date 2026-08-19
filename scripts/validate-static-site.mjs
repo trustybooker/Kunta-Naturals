@@ -148,7 +148,7 @@ for (const file of allTextFiles) {
   const content = fs.readFileSync(file, 'utf8');
   const rel = path.relative(root, file).replaceAll('\\', '/');
   if (content.includes('TODO_ADD_EMAIL_CAPTURE_OR_FORM_ENDPOINT')) fail(`${rel} still contains dead email TODO endpoint.`);
-  if (content.includes('ChatGPT Image Jun')) warn(`${rel} still references old whole-board AI image filename.`);
+  if (content.includes('ChatGPT Image Jun')) fail(`${rel} still references a deleted whole-board AI image filename.`);
 }
 
 const sitemap = read('site/sitemap.xml');

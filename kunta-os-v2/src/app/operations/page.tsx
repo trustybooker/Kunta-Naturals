@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { AppHeader } from '@/components/app-header';
 import { requireAdmin } from '@/lib/admin-auth';
 import { createSupabaseAdminClient } from '@/lib/supabase/admin-client';
+import { SupportQueue } from '@/components/support-queue';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,19 +13,21 @@ function money(cents: number | null, currency = 'USD') {
 export default async function OperationsPage() {
   if (!await requireAdmin()) redirect('/login');
   const supabase = createSupabaseAdminClient();
-  const [ordersResult, leadsResult, tokensResult, downloadsResult, emailEventsResult] = await Promise.all([
+  const [ordersResult, leadsResult, tokensResult, downloadsResult, emailEventsResult, supportResult] = await Promise.all([
     supabase.from('orders').select('id,product_id,amount_total,currency,status,customer_email,created_at').order('created_at', { ascending: false }).limit(50),
     supabase.from('email_leads').select('id,email,product,marketing_consent,sequence_status,sequence_day,created_at').order('created_at', { ascending: false }).limit(50),
     supabase.from('delivery_tokens').select('id,order_id,product_id,use_count,max_uses,expires_at,revoked_at,created_at').order('created_at', { ascending: false }).limit(50),
     supabase.from('download_events').select('id,product_id,event_name,created_at').order('created_at', { ascending: false }).limit(50),
-    supabase.from('email_events').select('id,event_type,sequence_day,occurred_at').order('occurred_at', { ascending: false }).limit(50)
+    supabase.from('email_events').select('id,event_type,sequence_day,occurred_at').order('occurred_at', { ascending: false }).limit(50),
+    supabase.from('support_requests').select('id,email,topic,order_reference,message,status,created_at').order('created_at', { ascending: false }).limit(50)
   ]);
   const orders = ordersResult.data || [];
   const leads = leadsResult.data || [];
   const tokens = tokensResult.data || [];
   const downloads = downloadsResult.data || [];
   const emailEvents = emailEventsResult.data || [];
-  const errors = [ordersResult, leadsResult, tokensResult, downloadsResult, emailEventsResult].filter((result) => result.error);
+  const support = supportResult.data || [];
+  const errors = [ordersResult, leadsResult, tokensResult, downloadsResult, emailEventsResult, supportResult].filter((result) => result.error);
   const paid = orders.filter((order) => order.status === 'paid');
   const revenue = paid.reduce((sum, order) => sum + Number(order.amount_total || 0), 0);
   const deliveryIssues = paid.filter((order) => !tokens.some((token) => token.order_id === order.id));
@@ -41,6 +44,11 @@ export default async function OperationsPage() {
       <article className="card"><span className="stat">{money(revenue)}</span><p>Recent paid revenue</p></article>
       <article className="card"><span className="stat">{deliveryIssues.length}</span><p>Paid orders missing access</p></article>
       <article className="card"><span className="stat">{leads.filter((lead) => lead.marketing_consent && lead.sequence_status === 'active').length}</span><p>Active consented leads</p></article>
+      <article className="card"><span className="stat">{support.filter((request) => request.status !== 'resolved').length}</span><p>Open support requests</p></article>
+    </section>
+    <section className="card section-block">
+      <div className="row-between"><div><p className="eyebrow">Customer care</p><h2>Recent support requests</h2></div><span className="badge">{support.length} shown</span></div>
+      <SupportQueue initialRequests={support} />
     </section>
     {deliveryIssues.length > 0 && <section className="notice error-notice section-block"><strong>Action required:</strong> {deliveryIssues.length} paid order(s) have no matching delivery token in the latest records. Verify Stripe webhook delivery before promoting paid products.</section>}
     <section className="card section-block">

@@ -1,6 +1,6 @@
 async function loadSiteConfig() {
   try {
-    const response = await fetch('data/site-config.json', { cache: 'no-store' });
+    const response = await fetch('/data/site-config.json', { cache: 'no-store' });
     if (!response.ok) throw new Error('Configuration unavailable.');
     return await response.json();
   } catch {

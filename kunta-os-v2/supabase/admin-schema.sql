@@ -101,11 +101,26 @@ create table if not exists public.affiliate_product_candidates (
 );
 create index if not exists affiliate_candidates_review_idx on public.affiliate_product_candidates(status, score desc, last_seen_at desc);
 
+create table if not exists public.support_requests (
+  id uuid primary key default gen_random_uuid(),
+  email text not null,
+  topic text not null check (topic in ('order','delivery','email','product','other')),
+  order_reference text,
+  message text not null,
+  source_path text,
+  status text not null default 'new' check (status in ('new','in_progress','resolved')),
+  created_at timestamptz not null default now(),
+  resolved_at timestamptz
+);
+create index if not exists support_requests_queue_idx on public.support_requests(status, created_at desc);
+
 alter table public.catalog_products enable row level security;
 alter table public.analytics_events enable row level security;
 alter table public.content_items enable row level security;
 alter table public.admin_audit_log enable row level security;
 alter table public.affiliate_product_candidates enable row level security;
+alter table public.support_requests enable row level security;
+revoke all on table public.support_requests from anon, authenticated;
 
 -- No browser-facing policies are created. All reads and writes pass through
 -- authenticated server routes using the service role and an admin allowlist.

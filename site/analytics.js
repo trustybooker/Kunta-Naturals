@@ -3,8 +3,7 @@
   let endpoint = '';
   async function configure() {
     try {
-      const prefix = location.pathname.includes('/products/') ? '../' : '';
-      const response = await fetch(`${prefix}data/site-config.json`);
+      const response = await fetch('/data/site-config.json');
       const config = await response.json();
       endpoint = config.backend_api_base_url ? `${config.backend_api_base_url}/api/events` : '';
       track('page_view');

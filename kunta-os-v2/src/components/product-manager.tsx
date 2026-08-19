@@ -29,7 +29,7 @@ export function ProductManager() {
       if (response.status === 401 || response.status === 403) { window.location.href = '/login?next=%2Fproducts'; return; }
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Could not load products.');
-      setProducts(data.map((product: Product) => ({ ...empty, ...product })));
+      const normalized = data.map((product: Product) => ({ ...empty, ...product })); setProducts(normalized); const requested = new URLSearchParams(window.location.search).get('edit'); if (requested) { const match = normalized.find((product: Product) => product.id === requested); if (match) setCurrent(match); }
       setStatus(`${data.length} products loaded.`);
     } catch (error) {
       setStatus(errorMessage(error, 'Could not load products. Check your connection and try again.'));

@@ -50,11 +50,11 @@ export default async function ApprovalsPage() {
       <section className="grid two-grid section-block">
         <article className="card">
           <div className="row-between"><h2>Products awaiting review</h2><span className="badge">{products.length}</span></div>
-          {products.length ? <div className="queue-list">{products.map((product) => <div className="queue-item" key={product.id}><div><strong>{product.name}</strong><p>{product.short_description}</p><small>{product.checkout_status}</small></div><Link className="button button-secondary" href="/products">Review product</Link></div>)}</div> : <p className="empty-state">No products are waiting for review.</p>}
+          {products.length ? <div className="queue-list">{products.map((product) => <div className="queue-item" key={product.id}><div><strong>{product.name}</strong><p>{product.short_description}</p><small>{product.checkout_status}</small></div><Link className="button button-secondary" href={`/products?edit=${encodeURIComponent(product.id)}`}>Review product</Link></div>)}</div> : <p className="empty-state">No products are waiting for review.</p>}
         </article>
         <article className="card">
           <div className="row-between"><h2>Content awaiting review</h2><span className="badge">{content.length}</span></div>
-          {content.length ? <div className="queue-list">{content.map((item) => <div className="queue-item" key={item.id}><div><strong>{item.title}</strong><p>{item.channel} · updated {new Date(item.updated_at).toLocaleDateString()}</p></div><Link className="button button-secondary" href="/content">Review content</Link></div>)}</div> : <p className="empty-state">No content is waiting for review.</p>}
+          {content.length ? <div className="queue-list">{content.map((item) => <div className="queue-item" key={item.id}><div><strong>{item.title}</strong><p>{item.channel} · updated {new Date(item.updated_at).toLocaleDateString()}</p></div><Link className="button button-secondary" href={`/content?edit=${encodeURIComponent(item.id)}`}>Review content</Link></div>)}</div> : <p className="empty-state">No content is waiting for review.</p>}
         </article>
       </section>
       {(productsResult.error || contentResult.error) && <section className="notice error-notice section-block">The live approval queue could not be loaded. Check the admin schema and Supabase connection.</section>}
