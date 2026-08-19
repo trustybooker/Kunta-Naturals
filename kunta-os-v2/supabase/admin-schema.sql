@@ -78,10 +78,34 @@ create table if not exists public.admin_audit_log (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.affiliate_product_candidates (
+  id uuid primary key default gen_random_uuid(),
+  provider text not null default 'awin',
+  external_id text not null,
+  merchant_name text not null default '',
+  name text not null,
+  description text not null default '',
+  category text not null default '',
+  price numeric(10,2) not null default 0,
+  currency text not null default 'USD',
+  image_url text not null default '',
+  affiliate_url text not null,
+  score integer not null default 0 check (score between 0 and 100),
+  score_reasons text[] not null default '{}',
+  status text not null default 'pending' check (status in ('pending','approved','rejected','imported')),
+  raw jsonb not null default '{}',
+  first_seen_at timestamptz not null default now(),
+  last_seen_at timestamptz not null default now(),
+  reviewed_at timestamptz,
+  unique(provider, external_id)
+);
+create index if not exists affiliate_candidates_review_idx on public.affiliate_product_candidates(status, score desc, last_seen_at desc);
+
 alter table public.catalog_products enable row level security;
 alter table public.analytics_events enable row level security;
 alter table public.content_items enable row level security;
 alter table public.admin_audit_log enable row level security;
+alter table public.affiliate_product_candidates enable row level security;
 
 -- No browser-facing policies are created. All reads and writes pass through
 -- authenticated server routes using the service role and an admin allowlist.
