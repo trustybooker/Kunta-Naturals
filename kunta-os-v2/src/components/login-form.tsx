@@ -37,8 +37,15 @@ export function LoginForm() {
       setPending(false);
       return;
     }
+    const access = await fetch('/api/admin/session', { cache: 'no-store' });
+    if (!access.ok) {
+      await supabase.auth.signOut();
+      setStatus('This account is valid but is not approved for Kunta Naturals administration.');
+      setPending(false);
+      return;
+    }
     const next = new URLSearchParams(window.location.search).get('next');
-    router.replace(next?.startsWith('/') ? next : '/dashboard');
+    router.replace(next?.startsWith('/') && !next.startsWith('//') ? next : '/dashboard');
     router.refresh();
   }
 
