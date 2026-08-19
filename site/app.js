@@ -33,7 +33,8 @@ function actionLabel(product) {
   if (product.checkout_status === 'free_public') return 'Open free product';
   if (product.checkout_status === 'pending_supplier') return 'Join the product waitlist';
   if (product.checkout_status === 'pending_partner') return 'Join the bundle waitlist';
-  if (product.checkout_status === 'pending_provider') return `Get launch access · ${moneyLabel(product)}`;
+  if (product.checkout_status === 'pending_provider') return `Join the launch list · ${moneyLabel(product)}`;
+  if (product.checkout_status === 'live' && Number(product.price || 0) > 0) return `Buy securely · ${moneyLabel(product)}`;
   if (Number(product.price || 0) > 0) return `View details - ${moneyLabel(product)}`;
   return 'Get ritual guide first';
 }
@@ -42,7 +43,8 @@ function statusNote(product) {
   if (product.checkout_status === 'free_public') return 'Free public delivery path.';
   if (product.checkout_status === 'pending_supplier') return 'In development · no payment taken.';
   if (product.checkout_status === 'pending_partner') return 'In development · no payment taken.';
-  if (product.checkout_status === 'pending_provider') return 'Launching soon with secure delivery · no payment taken today.';
+  if (product.checkout_status === 'pending_provider') return 'Launching soon · no payment taken today.';
+  if (product.checkout_status === 'live' && product.product_type === 'digital') return 'Secure checkout · private digital delivery.';
   if (product.fulfillment_model?.includes('pod') || product.fulfillment_model?.includes('supplier') || product.fulfillment_model?.includes('partner')) return 'No Kunta Naturals inventory or direct shipping.';
   if (product.product_type === 'digital') return 'Owned digital product path.';
   return 'Third-party fulfillment path.';
