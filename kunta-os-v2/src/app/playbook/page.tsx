@@ -69,7 +69,10 @@ export default async function PlaybookPage() {
   const paidLive = activeProducts.filter((product) => product.checkout_status === 'live').length;
   const paidWaiting = activeProducts.filter((product) => product.price > 0 && product.checkout_status !== 'live').length;
   const emailConfigured = Boolean(process.env.RESEND_API_KEY);
-  const stripeConfigured = Boolean(process.env.STRIPE_SECRET_KEY && process.env.STRIPE_WEBHOOK_SECRET);
+  const stripeConfigured = Boolean(
+    (process.env.KUNTA_STRIPE_SECRET_KEY || process.env.STRIPE_SECRET_KEY)
+    && (process.env.KUNTA_STRIPE_WEBHOOK_SECRET || process.env.STRIPE_WEBHOOK_SECRET)
+  );
   const deliveryConfigured = Boolean(process.env.DELIVERY_TOKEN_SECRET && process.env.SUPABASE_DELIVERY_BUCKET);
 
   return <main className="shell playbook">
@@ -94,7 +97,7 @@ export default async function PlaybookPage() {
         <StatusCard label="Paid checkout" ready={stripeConfigured && deliveryConfigured && paidLive > 0} detail={paidLive ? `${paidLive} paid product(s) marked live.` : 'Keep payments disabled until Stripe, webhook, private files, delivery, refund handling, and a real purchase test pass.'} />
         <StatusCard label="Product ladder" ready={freeReady > 0} detail={`${freeReady} free product(s) ready; ${paidWaiting} paid product(s) remain early access; ${paidLive} paid product(s) live.`} />
       </div>
-      <div className="notice"><strong>Current launch position:</strong> market the free ritual system and collect consented interest. Do not represent an early-access product as immediately purchasable.</div>
+      <div className="notice"><strong>Current launch position:</strong> {paidLive > 0 ? `${paidLive} paid product(s) may be marketed as purchasable; keep every pending physical or partner product clearly waitlisted.` : 'Market the free ritual system and collect consented interest. Do not represent an early-access product as immediately purchasable.'}</div>
     </section>
 
     <section className="grid two-grid section-block">
