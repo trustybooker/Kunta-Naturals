@@ -1,1 +1,1 @@
-.visual-card img{object-fit:contain;background:var(--white)}.product-media>img:first-child{object-fit:contain}.visual-card.large img,.visual-card.male-card img,.visual-card.family-card img{height:clamp(250px,28vw,360px)}
+.visual-card img{object-fit:contain;background:var(--white)}.visual-card img.lifestyle-photo{width:100%;object-fit:cover;background:var(--sand)}.product-media>img:first-child{object-fit:contain}.visual-card.large img,.visual-card.male-card img,.visual-card.family-card img{height:clamp(250px,28vw,360px)}
