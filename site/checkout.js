@@ -77,6 +77,8 @@ async function setupCheckout() {
     setCheckoutStatus('This product is not accepting payments yet. Join the launch list for first access.', 'pending');
   } else if (!apiUrl) {
     setCheckoutStatus('Secure checkout is temporarily unavailable. No payment information has been collected.', 'pending');
+  } else if (product) {
+    setCheckoutStatus('Ready for secure Stripe checkout. Nothing is charged until you confirm with Stripe.', 'ready');
   }
 
   form?.addEventListener('submit', async (event) => {
