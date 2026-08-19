@@ -79,11 +79,11 @@
     "image_url": "assets/kn-product-guide-7-day.svg",
     "detail_url": "products/7-day-body-ritual-guide.html",
     "checkout_url": "checkout.html?product=7-day-body-ritual-guide",
-    "checkout_status": "pending_provider",
+    "checkout_status": "live",
     "tags": ["paid", "guide", "digital", "owned"],
     "compliance_notes": "Paid file must stay out of the public repo until protected delivery is live.",
     "disclosure_required": false,
-    "fulfillment_model": "owned_digital_private_delivery_pending",
+    "fulfillment_model": "owned_digital_private_delivery",
     "status": "active"
   },
   {
@@ -100,11 +100,11 @@
     "image_url": "assets/kn-product-glow-scent-bundle.svg",
     "detail_url": "products/glow-scent-bundle.html",
     "checkout_url": "checkout.html?product=glow-scent-bundle",
-    "checkout_status": "pending_provider",
+    "checkout_status": "live",
     "tags": ["paid", "bundle", "digital", "owned"],
     "compliance_notes": "Avoids outcome claims; paid files require protected delivery.",
     "disclosure_required": false,
-    "fulfillment_model": "owned_digital_private_delivery_pending",
+    "fulfillment_model": "owned_digital_private_delivery",
     "status": "active"
   },
   {
@@ -121,11 +121,11 @@
     "image_url": "assets/kn-product-vault.svg",
     "detail_url": "products/ritual-vault.html",
     "checkout_url": "checkout.html?product=ritual-vault",
-    "checkout_status": "pending_provider",
+    "checkout_status": "live",
     "tags": ["paid", "vault", "bundle", "owned"],
     "compliance_notes": "Private paid delivery required before real purchase flow.",
     "disclosure_required": false,
-    "fulfillment_model": "owned_digital_private_delivery_pending",
+    "fulfillment_model": "owned_digital_private_delivery",
     "status": "active"
   },
   {
@@ -142,11 +142,11 @@
     "image_url": "assets/kn-clean-journal.svg",
     "detail_url": "products/ritual-journal.html",
     "checkout_url": "checkout.html?product=ritual-journal",
-    "checkout_status": "pending_provider",
+    "checkout_status": "live",
     "tags": ["paid", "owned", "digital", "journal"],
     "compliance_notes": "No physical inventory required if sold digital or POD.",
     "disclosure_required": false,
-    "fulfillment_model": "owned_digital_or_pod_pending",
+    "fulfillment_model": "owned_digital_private_delivery",
     "status": "active"
   },
   {
@@ -163,11 +163,11 @@
     "image_url": "assets/kn-clean-cards.svg",
     "detail_url": "products/bathroom-reset-cards.html",
     "checkout_url": "checkout.html?product=bathroom-reset-cards",
-    "checkout_status": "pending_provider",
+    "checkout_status": "live",
     "tags": ["paid", "owned", "digital", "cards"],
     "compliance_notes": "Organization product only; no health or safety guarantees.",
     "disclosure_required": false,
-    "fulfillment_model": "owned_digital_or_pod_pending",
+    "fulfillment_model": "owned_digital_private_delivery",
     "status": "active"
   },
   {
@@ -184,10 +184,10 @@
     "image_url": "assets/kn-clean-planner.svg",
     "detail_url": "products/self-care-planner.html",
     "checkout_url": "checkout.html?product=self-care-planner",
-    "checkout_status": "pending_provider",
+    "checkout_status": "live",
     "tags": ["paid", "owned", "digital", "planner"],
     "compliance_notes": "Owned digital product; no inventory required.",
-    "fulfillment_model": "owned_digital_or_pod_pending",
+    "fulfillment_model": "owned_digital_private_delivery",
     "status": "active"
   },
   {
