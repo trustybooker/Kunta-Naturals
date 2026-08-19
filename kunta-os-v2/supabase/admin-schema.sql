@@ -42,9 +42,25 @@ create table if not exists public.content_items (
   call_to_action text,
   status text not null default 'draft' check (status in ('draft', 'review', 'approved', 'published', 'archived')),
   scheduled_for timestamptz,
+  campaign text not null default '',
+  content_format text not null default 'Post',
+  media_url text,
+  publication_url text,
+  publish_status text not null default 'not_scheduled' check (publish_status in ('not_scheduled', 'scheduled', 'published', 'failed')),
+  published_at timestamptz,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+alter table public.content_items add column if not exists campaign text not null default '';
+alter table public.content_items add column if not exists content_format text not null default 'Post';
+alter table public.content_items add column if not exists media_url text;
+alter table public.content_items add column if not exists publication_url text;
+alter table public.content_items add column if not exists publish_status text not null default 'not_scheduled';
+alter table public.content_items add column if not exists published_at timestamptz;
+do $$ begin
+  alter table public.content_items add constraint content_items_publish_status_check check (publish_status in ('not_scheduled', 'scheduled', 'published', 'failed'));
+exception when duplicate_object then null; end $$;
+create index if not exists content_items_schedule_idx on public.content_items(publish_status, scheduled_for);
 
 create table if not exists public.admin_audit_log (
   id bigint generated always as identity primary key,
