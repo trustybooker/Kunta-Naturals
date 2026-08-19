@@ -5,8 +5,8 @@ import { createSupabaseAdminClient } from '@/lib/supabase/admin-client';
 const STRIPE_BRAND_NAMESPACE = 'kunta-naturals';
 
 export async function POST(request: Request) {
-  const secretKey = process.env.STRIPE_SECRET_KEY;
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  const secretKey = process.env.KUNTA_STRIPE_SECRET_KEY || process.env.STRIPE_SECRET_KEY;
+  const webhookSecret = process.env.KUNTA_STRIPE_WEBHOOK_SECRET || process.env.STRIPE_WEBHOOK_SECRET;
 
   if (!secretKey || !webhookSecret) {
     return NextResponse.json({ error: 'Stripe webhook is not configured.' }, { status: 501 });

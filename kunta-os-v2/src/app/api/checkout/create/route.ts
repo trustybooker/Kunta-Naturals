@@ -90,7 +90,7 @@ export async function POST(request: Request) {
     return json(request, { error: 'This product is awaiting its final delivery file.' }, 409);
   }
 
-  const secretKey = process.env.STRIPE_SECRET_KEY;
+  const secretKey = process.env.KUNTA_STRIPE_SECRET_KEY || process.env.STRIPE_SECRET_KEY;
   const publicSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kuntanaturals.com';
   const backendUrl = process.env.KUNTA_BACKEND_PUBLIC_URL || publicSiteUrl;
 
